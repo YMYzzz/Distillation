@@ -90,7 +90,7 @@ const TextLoader = (props) => {
                     marginBottom: '.7em'
                 }}>
                     <Upload
-                        action=""
+                        action="http://localhost:3000/"
                         listType="picture-card"
                         fileList={fileList}
                         onPreview={handlePreview}
@@ -100,9 +100,10 @@ const TextLoader = (props) => {
                         {(fileList.length >= 1 || picList.length) ? null : uploadFileButton}
                     </Upload>
                     <Upload
-                        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                        action="http://localhost:3000/"
                         listType="picture-card"
-                        multiple='true'
+                        // 多选的情况下可能会造成个别图片上传错误，并且如果用户上传超过上限的图片需要做额外限制
+                        multiple={true}
                         fileList={picList}
                         onPreview={handlePreview}
                         onChange={handlePicChange}

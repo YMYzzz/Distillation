@@ -1,7 +1,8 @@
 // 扩展头像功能，悬浮提醒，点击登录
 
 import React, { useState } from 'react';
-import { Avatar, Popover, Modal, Button, Input, message } from 'antd';
+import { Link, useNavigate } from 'react-router-dom';
+import { Avatar, Popover, Modal, Button, Input, message, Divider } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 
 const MyAvatar = () => {
@@ -12,12 +13,22 @@ const MyAvatar = () => {
         </div>
     );
 
+    const userPopover = (
+        <div>
+            <Link to='/history'>历史记录</Link>
+            <Divider style={{ margin: '12px 0' }} />
+            <Link to='/history'>个人主页</Link>
+        </div>
+    );
+
     const [visible, setVisible] = useState(false);
     const [confirmLoading, setConfirmLoading] = useState(false);
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
+    // 用于存储用户是否登录的状态，判断头像悬浮窗渲染样式
+    const [isLogin, setIsLogin] = useState(true);
 
-    const showModal = () => {
+    const showLoginModal = () => {
         setVisible(true);
     };
 
@@ -43,10 +54,15 @@ const MyAvatar = () => {
         // 跳转注册页面，可用路由
     }
 
+    const navigate = useNavigate();
+    const goUserInfo = () => {
+        // navigate("/history"); // 向 navigate 方法中传入要跳转的 path 路径
+    }
+
     return (
         <>
             {/* 条件判断是否登录，若未登录则包裹popover，若已登录则不需要包裹并且头像图片显示用户头像 */}
-            <Popover content={loginPopover} trigger="hover" onClick={showModal}>
+            <Popover content={isLogin ? userPopover : loginPopover} trigger="hover" onClick={isLogin ? goUserInfo : showLoginModal}>
                 <Avatar
                     style={{
                         backgroundColor: '#87d068',

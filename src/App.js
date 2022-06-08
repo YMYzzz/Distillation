@@ -1,22 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom'
 import { Layout } from 'antd';
-import TextLoader from './component/TextLoader'
-import ShowArea from './component/ShowArea';
 import MyAvatar from './component/MyAvatar';
+import EditArea from './component/EditArea'
+import HistoryList from './component/HistoryList'
 
 
 const { Header, Content, Footer } = Layout;
 
 const App = () => {
 
-  const [title, setTitle] = useState('')
-  const [abstract, setAbstract] = useState('')
+  const [clientHeight, setClientHeight] = useState(document.body.scrollHeight)
+
+  const handleClientHeightChange = () => {
+    setClientHeight(document.body.scrollHeight)
+  }
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleClientHeightChange);
+    return () => window.removeEventListener('scroll', handleClientHeightChange);
+  }, [])
+
+  const mainStyle = {
+    height: clientHeight + 'px',
+  }
 
   return (
     <Layout
-      style={{
-        height: '100%'
-      }}
+      style={mainStyle}
     >
       <Header
         style={{
@@ -34,39 +45,13 @@ const App = () => {
         style={{
           padding: '0 50px',
           marginTop: 64,
+          minHeight: 'auto',
         }}
       >
-        <div
-          className="site-layout-background"
-          style={{
-            margin: '16px 0',
-            padding: 24,
-            // minHeight: 380,
-            height: '100%',
-          }}
-        >
-          <div style={{
-            height: '20%',
-            width: '70%',
-            margin: '0 auto',
-          }}>
-            <ShowArea title={title} abstract={abstract}></ShowArea>
-          </div>
-          <div style={{
-            height: '75%',
-            width: '70%',
-            margin: '0 auto',
-            paddingTop: '1.2em',
-            borderRadius: '0.75em',
-            boxShadow: '0px 5px 16px -2px rgb(42 115 217 / 20%)',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-            <TextLoader setTitle={setTitle} setAbstract={setAbstract}></TextLoader>
-          </div>
-        </div>
+        <Routes>
+          <Route path="/" element={<EditArea />} />
+          <Route path="/history" element={<HistoryList />} />
+        </Routes>
       </Content>
       <Footer
         style={{
