@@ -1,7 +1,8 @@
 // 展示用户生成历史记录列表
 import { Avatar, Button, List, Skeleton } from 'antd';
 import React, { useEffect, useState } from 'react';
-const count = 3;
+import axios from 'axios'
+const count = 5;
 const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat,picture&noinfo`;
 
 const HistoryList = () => {
@@ -10,13 +11,12 @@ const HistoryList = () => {
   const [data, setData] = useState([]);
   const [list, setList] = useState([]);
   useEffect(() => {
-    fetch(fakeDataUrl)
-      .then((res) => res.json())
-      .then((res) => {
-        setInitLoading(false);
-        setData(res.results);
-        setList(res.results);
-      });
+    axios.get(fakeDataUrl).then((res) => {
+      const data = res.data
+      setInitLoading(false);
+      setData(data.results);
+      setList(data.results);
+    })
   }, []);
 
   const onLoadMore = () => {
@@ -30,18 +30,16 @@ const HistoryList = () => {
         })),
       ),
     );
-    fetch(fakeDataUrl)
-      .then((res) => res.json())
-      .then((res) => {
-        const newData = data.concat(res.results);
-        setData(newData);
-        setList(newData);
-        setLoading(false); // Resetting window's offsetTop so as to display react-virtualized demo underfloor.
-        // In real scene, you can using public method of react-virtualized:
-        // https://stackoverflow.com/questions/46700726/how-to-use-public-method-updateposition-of-react-virtualized
+    axios.get(fakeDataUrl).then((res) => {
+      const newData = data.concat(res.data.results);
+      setData(newData);
+      setList(newData);
+      setLoading(false); // Resetting window's offsetTop so as to display react-virtualized demo underfloor.
+      // In real scene, you can using public method of react-virtualized:
+      // https://stackoverflow.com/questions/46700726/how-to-use-public-method-updateposition-of-react-virtualized
 
-        window.dispatchEvent(new Event('resize'));
-      });
+      // window.dispatchEvent(new Event('resize'));
+    })
   };
 
   const loadMore =
@@ -74,15 +72,15 @@ const HistoryList = () => {
         dataSource={list}
         renderItem={(item) => (
           <List.Item
-            actions={[<a key="list-loadmore-edit">edit</a>, <a key="list-loadmore-more">more</a>]}
+            actions={[<a key="list-loadmore-edit">点击编辑</a>]}
           >
             <Skeleton avatar title={false} loading={item.loading} active>
               <List.Item.Meta
                 avatar={<Avatar src={item.picture.large} />}
                 title={<a href="https://ant.design">{item.name?.last}</a>}
-                description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                description="这里会显示用户历史记录中由系统自动生成的文章标题"
               />
-              <div>content</div>
+              <div>这里可以显示系统生成的时间</div>
             </Skeleton>
           </List.Item>
         )}

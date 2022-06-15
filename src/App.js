@@ -16,6 +16,7 @@ const App = () => {
     setClientHeight(document.body.scrollHeight)
   }
 
+  // 监听页面高度变化，实现无限滚动背景统一
   useEffect(() => {
     window.addEventListener('scroll', handleClientHeightChange);
     return () => window.removeEventListener('scroll', handleClientHeightChange);
