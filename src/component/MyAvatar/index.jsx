@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Avatar, Popover, Modal, Button, Input, message, Divider } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
+import Login from '../Login'
 
 const MyAvatar = () => {
     const loginPopover = (
@@ -17,7 +18,7 @@ const MyAvatar = () => {
         <div>
             <Link to='/history'>历史记录</Link>
             <Divider style={{ margin: '12px 0' }} />
-            <Link to='/history'>个人主页</Link>
+            <Link to='/user'>个人主页</Link>
         </div>
     );
 
@@ -26,7 +27,7 @@ const MyAvatar = () => {
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
     // 用于存储用户是否登录的状态，判断头像悬浮窗渲染样式
-    const [isLogin, setIsLogin] = useState(true);
+    const [isLogin, setIsLogin] = useState(false);
 
     const showLoginModal = () => {
         setVisible(true);
@@ -52,6 +53,7 @@ const MyAvatar = () => {
 
     const handleRegist = () => {
         // 跳转注册页面，可用路由
+        navigate("/registration");
     }
 
     const navigate = useNavigate();
@@ -59,10 +61,14 @@ const MyAvatar = () => {
         // navigate("/history"); // 向 navigate 方法中传入要跳转的 path 路径
     }
 
+    const goLogin = () => {
+        navigate("/login"); 
+    }
+
     return (
         <>
             {/* 条件判断是否登录，若未登录则包裹popover，若已登录则不需要包裹并且头像图片显示用户头像 */}
-            <Popover content={isLogin ? userPopover : loginPopover} trigger="hover" onClick={isLogin ? goUserInfo : showLoginModal}>
+            <Popover content={isLogin ? userPopover : loginPopover} trigger="hover" onClick={isLogin ? goUserInfo : goLogin}>
                 <Avatar
                     style={{
                         backgroundColor: '#87d068',
@@ -76,24 +82,24 @@ const MyAvatar = () => {
                 visible={visible}
                 onOk={handleOk}
                 onCancel={handleCancel}
-                footer={[
-                    <Button key="back" onClick={handleCancel} style={{ marginRight: '3em' }}>
-                        取消
-                    </Button>,
-                    <Button
-                        key="link"
-                        type="primary"
-                        onClick={handleRegist}
-                    >
-                        去注册
-                    </Button>,
-                    <Button key="submit" type="primary" loading={confirmLoading} onClick={handleOk}>
-                        登录
-                    </Button>
-                ]}
+            // footer={[
+            //     <Button key="back" onClick={handleCancel} style={{ marginRight: '3em' }}>
+            //         取消
+            //     </Button>,
+            //     <Button
+            //         key="link"
+            //         type="primary"
+            //         onClick={handleRegist}
+            //     >
+            //         去注册
+            //     </Button>,
+            //     <Button key="submit" type="primary" loading={confirmLoading} onClick={handleOk}>
+            //         登录
+            //     </Button>
+            // ]}
             >
                 {/* <p>{modalText}</p> */}
-                <Input addonBefore={<span style={{ display: 'inline-block', width: '50px' }}>用户名：</span>}
+                {/* <Input addonBefore={<span style={{ display: 'inline-block', width: '50px' }}>用户名：</span>}
                     style={{ minWidth: 200, width: '100% - 40px' }}
                     placeholder="请输入用户名"
                     value={userName}
@@ -104,7 +110,8 @@ const MyAvatar = () => {
                     style={{ minWidth: 200 }}
                     placeholder="请输入密码"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)} />
+                    onChange={(e) => setPassword(e.target.value)} /> */}
+                <Login></Login>
             </Modal>
         </>
     );
