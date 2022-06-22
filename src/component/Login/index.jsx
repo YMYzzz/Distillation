@@ -150,18 +150,22 @@ const LoginMod = () => {
             if (passwordCheck) errors.push(passwordCheck);
 
             setFormErrors(errors);
-            const data = { phoneNum, password };
+            //const data = { phoneNum, password };
             const requestOptions = {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 'data': data })
+                body: JSON.stringify({ 'phone': phoneNum, password })
             };
-            const response = await fetch('https://reqres.in/api/posts', requestOptions);
+            const response = await fetch('http://127.0.0.1:5000/api/user/login', requestOptions);
             const result = await response.json();
             console.log(response.status);
             console.log(result);
             //TODO: check the response
-            if (!errors.length) setSuccess(true);
+            if (result.meta.status == '2000'){
+                setSuccess(true);
+                localStorage.setItem('token', result.data.token);
+            }
+
         }
 
         return <div className={classes.loginCard}>
