@@ -214,7 +214,7 @@ const RegisterMod = () => {
             console.log(result);
             //TODO: check the response.status
             //console.log(result['meta']['status']);
-            if (result['meta']['status'] == '2000') setResponse('注册成功, 请登录');
+            if (result.meta.status == '2000') setResponse('注册成功, 请登录');
         }
 
         return (<div className={classes.loginCard}>
