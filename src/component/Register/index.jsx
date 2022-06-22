@@ -201,20 +201,20 @@ const RegisterMod = () => {
             if (repeatCheck) errors.push(repeatCheck);
 
             setFormErrors(errors);
-            const data = { phoneNum, username, password ,code};
+            //const data = { "phone":phoneNum, username, password ,code , "confirm_password":repeatPassword};
             const requestOptions = {
                 method: 'POST',
                 mode: 'cors',
-                credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ data })
+                body: JSON.stringify({ "phone":phoneNum, username, password ,code , "confirm_password":repeatPassword })
             };
             const response = await fetch('http://127.0.0.1:5000/api/user/register', requestOptions);
             const result = await response.json();
             console.log(response.status);
             console.log(result);
             //TODO: check the response.status
-            if (!errors.length) setResponse('注册成功, 请登录');
+            //console.log(result['meta']['status']);
+            if (result['meta']['status'] == '2000') setResponse('注册成功, 请登录');
         }
 
         return (<div className={classes.loginCard}>
