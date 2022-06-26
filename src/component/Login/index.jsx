@@ -160,7 +160,6 @@ const LoginMod = () => {
             const result = await response.json();
             console.log(response.status);
             console.log(result);
-            //TODO: check the response
             if (result.meta.status == '2000'){
                 setSuccess(true);
                 localStorage.setItem('token', result.data.token);
@@ -197,7 +196,7 @@ const LoginMod = () => {
                     <div name="password" validate={passwordValidate}>
                         <Label>
                             <span>密码</span>
-                            <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                            <Input placeholder="包含数字、大小写字母且长度为8-16位" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                         </Label>
                     </div>
 
