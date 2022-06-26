@@ -254,7 +254,7 @@ const RegisterMod = () => {
                     <div>
                         <Label>
                             <span>请设定密码</span>
-                            <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                            <Input placeholder="包含数字、大小写字母且长度为8-16位" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                         </Label>
                     </div>
 
@@ -268,7 +268,7 @@ const RegisterMod = () => {
                     <div>
                         <Label>
                             <span>请输入验证码</span>
-                            <Input type="text" value={code} onChange={(e) => setCode(e.target.value)} />
+                            <Input placeholder="四位验证码" type="text" value={code} onChange={(e) => setCode(e.target.value)} />
                         </Label>
                     </div>
 
