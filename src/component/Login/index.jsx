@@ -154,16 +154,19 @@ const LoginMod = () => {
             const requestOptions = {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 'phone': phoneNum, password })
+                body: JSON.stringify({ 'username': phoneNum, password })
             };
             const response = await fetch('http://127.0.0.1:5000/api/user/login', requestOptions);
             const result = await response.json();
             console.log(response.status);
             console.log(result);
-            if (result.meta.status == '2000'){
+            if (result.meta.status == '2000') {
                 setSuccess(true);
                 localStorage.setItem('token', result.data.token);
             }
+            setTimeout(() => {
+                navigate('/')
+            }, 2000);
 
         }
 

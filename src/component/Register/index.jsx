@@ -12,7 +12,7 @@ import {
 
 const RegisterMod = () => {
 
-    const { useState, createContext, useContext, useEffect,View } = React;
+    const { useState, createContext, useContext, useEffect, View } = React;
     const { ThemeProvider, withStyles } = reactJss;
     //const { BrowserRouter, Switch, Route, useHistory } = ReactRouterDOM;
     const { FaChessBishop, FaPlusCircle, FaArrowLeft } = reactIconsFa;
@@ -122,7 +122,7 @@ const RegisterMod = () => {
         </div>
     }
     Input = withStyles(inputStyles)(Input);
- 
+
     function RegistrationPage(props) {
         const classes = props.classes;
         const navigate = useNavigate();
@@ -133,24 +133,24 @@ const RegisterMod = () => {
         const [repeatPassword, setRepeatPassword] = useState('');
         const [formErrors, setFormErrors] = useState([]);
 
-        let [num,setNum]=useState(0);
-        let [phoneNum,setTel]=useState("");
+        let [num, setNum] = useState(0);
+        let [phoneNum, setTel] = useState("");
 
-        const handleSend= async (e)=>{
+        const handleSend = async (e) => {
             e.preventDefault();
             let a = 10;
-            console.log(phoneNum,'手机号');
+            console.log(phoneNum, '手机号');
             var reg_tel = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
             if (reg_tel.test(phoneNum)) {
                 setNum(a)
-                const t1 = setInterval(()=>{
-                    a=a-1
+                const t1 = setInterval(() => {
+                    a = a - 1
                     setNum(a)
-                    if(a==0){
+                    if (a == 0) {
                         clearInterval(t1)
                     }
-                },1000);
-               // const data = {  };
+                }, 1000);
+                // const data = {  };
                 const requestOptions = {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -160,21 +160,21 @@ const RegisterMod = () => {
                 const result = await response.json();
                 console.log(response.status);
                 console.log(result);
-            }else {
+            } else {
                 alert('手机号格式不正确')
             }
         }
-        const onChangeInput = (e:ChangeEvent<HTMLInputElement>) =>{
-            console.log("Input改变",e.target.value);
-        
+        const onChangeInput = (e) => {
+            console.log("Input改变", e.target.value);
+
             var reg_num = /^[0-9]*$/
             if (reg_num.test(e.target.value)) {
                 setTel(e.target.value)
                 console.log(333);
             }
         }
-        useEffect(()=>{
-            console.log('数据发生了变化,触发useEffect',num);
+        useEffect(() => {
+            console.log('数据发生了变化,触发useEffect', num);
         })
 
         const backToLogin = () => {
@@ -206,7 +206,7 @@ const RegisterMod = () => {
                 method: 'POST',
                 mode: 'cors',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ "phone":phoneNum, username, password ,code , "confirm_password":repeatPassword })
+                body: JSON.stringify({ "phone": phoneNum, username, password, code, "confirm_password": repeatPassword })
             };
             const response = await fetch('http://127.0.0.1:5000/api/user/register', requestOptions);
             const result = await response.json();
@@ -229,13 +229,13 @@ const RegisterMod = () => {
             {!response ? <div className="form">
 
                 <div>
-                <Label>
-                <span>请输入手机号</span>
-                <div style={{ display: "flex"}}>
-                <Input type="text" value={phoneNum}  onChange={onChangeInput} />
-                <Button type="button" disabled={num!==0} onClick={handleSend}>{num==0?'发送验证码':num+"秒"}</Button>
-                </div>
-                </Label>
+                    <Label>
+                        <span>请输入手机号</span>
+                        <div style={{ display: "flex" }}>
+                            <Input type="text" value={phoneNum} onChange={onChangeInput} />
+                            <Button type="button" disabled={num !== 0} onClick={handleSend}>{num == 0 ? '发送验证码' : num + "秒"}</Button>
+                        </div>
+                    </Label>
                 </div>
 
                 <form onSubmit={registrationSubmitHandler}>

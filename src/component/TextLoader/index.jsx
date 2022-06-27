@@ -1,7 +1,8 @@
 // 用于用户上传文本或使用上传文档或使用图片OCR功能的入口文件
 
 import React, { useState } from 'react';
-import { Upload, Modal, Input, Button } from 'antd';
+import { Upload, Modal, Input, Button, message, Tooltip } from 'antd';
+import axios from 'axios'
 import { UploadOutlined, PictureOutlined, PlusOutlined } from '@ant-design/icons';
 import './TextLoader.css'
 const { TextArea } = Input;
@@ -17,8 +18,9 @@ const getBase64 = (file) =>
     });
 
 const TextLoader = (props) => {
-    const { setTitle, setAbstract } = props
+    const { setTitle, setAbstract, text } = props
 
+    const [uploading, setUploading] = useState(false);
     const [previewVisible, setPreviewVisible] = useState(false);
     const [previewImage, setPreviewImage] = useState('');
     const [previewTitle, setPreviewTitle] = useState('');
@@ -66,18 +68,66 @@ const TextLoader = (props) => {
         </div>
     );
 
+    const handleUpload = () => {
+        if (fileList.length) {
+            const doc = fileList[0].originFileObj
+            setUploading(true); // You can use any AJAX library you like
+
+            axios.post('http://127.0.0.1:5000/api/article/doc',
+                { doc },
+                {
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                }).then((res) => {
+                    const data = res.data
+                    console.log(data)
+                }).catch((err) => {
+                    console.log(err)
+                }).finally(() => {
+                    setUploading(false);
+                });
+        }
+        if (picList.length) {
+            // const pics = []
+            const formData = new FormData();
+            picList.forEach((pic) => {
+                // pics.push(pic.originFileObj);
+                formData.append('image', pic.originFileObj);
+            });
+            setUploading(true); // You can use any AJAX library you like
+
+            axios.post('http://127.0.0.1:5000/api/article/ocr',
+                { image: formData },
+                {
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                }).then((res) => {
+                    const data = res.data
+                    console.log(data)
+                }).catch((err) => {
+                    console.log(err)
+                }).finally(() => {
+                    setUploading(false);
+                });
+        }
+
+    };
+
     const upLoadText = () => {
         // 上传文本文档并获取返回值（标题、摘要）
-        setTitle("test")
-        setAbstract("test1")
+        axios.post('http://127.0.0.1:5000/api/article/text', {
+            body: { content: text }
+        }).then((res) => {
+            const data = res.data
+            console.log(data)
+            setTitle(data.data.title)
+            setAbstract(data.data.abstract)
+        }).catch((err) => {
+            console.log(err)
+        })
     }
 
-    const OCR = () => {
-
-    }
-
-    const uploadFile = () => {
-
+    const beforeUpload = (file) => {
+        setFileList([...fileList, file]);
+        return false;
     }
 
     return (
@@ -89,28 +139,33 @@ const TextLoader = (props) => {
                     alignItems: 'center',
                     marginBottom: '.7em'
                 }}>
-                    <Upload
-                        action="http://localhost:3000/"
-                        listType="picture-card"
-                        fileList={fileList}
-                        onPreview={handlePreview}
-                        onChange={handleFileChange}
-                        accept=".doc,.docx,.txt"
-                    >
-                        {(fileList.length >= 1 || picList.length) ? null : uploadFileButton}
-                    </Upload>
-                    <Upload
-                        action="http://localhost:3000/"
-                        listType="picture-card"
-                        // 多选的情况下可能会造成个别图片上传错误，并且如果用户上传超过上限的图片需要做额外限制
-                        multiple={true}
-                        fileList={picList}
-                        onPreview={handlePreview}
-                        onChange={handlePicChange}
-                        accept=".png,.jpg,.jpeg,.bmp"
-                    >
-                        {(picList.length >= 5 || fileList.length) ? null : uploadPicButton}
-                    </Upload>
+                    <Tooltip title=".doc / .docx / .txt">
+                        <Upload
+                            // action="http://127.0.0.1:5000/api/article/doc"
+                            listType="picture-card"
+                            fileList={fileList}
+                            onPreview={handlePreview}
+                            onChange={handleFileChange}
+                            accept=".doc,.docx,.txt"
+                            beforeUpload
+                        >
+                            {(fileList.length >= 1 || picList.length) ? null : uploadFileButton}
+                        </Upload>
+                    </Tooltip>
+                    <Tooltip title=".png / .jpg / .jpeg / .bmp">
+                        <Upload
+                            // action="http://localhost:3000/"
+                            listType="picture-card"
+                            // 多选的情况下可能会造成个别图片上传错误，并且如果用户上传超过上限的图片需要做额外限制
+                            multiple={true}
+                            fileList={picList}
+                            onPreview={handlePreview}
+                            onChange={handlePicChange}
+                            accept=".png,.jpg,.jpeg,.bmp"
+                        >
+                            {(picList.length >= 5 || fileList.length) ? null : uploadPicButton}
+                        </Upload>
+                    </Tooltip>
                 </div>
                 <div>
                     <Modal visible={previewVisible} title={previewTitle} footer={null} onCancel={handleCancel}>
@@ -128,6 +183,7 @@ const TextLoader = (props) => {
             <TextArea
                 showCount
                 maxLength={10000}
+                value={text}
                 style={{
                     height: '70%',
                     width: '80%',
@@ -135,7 +191,18 @@ const TextLoader = (props) => {
                 }}
             />
             <div>
-                <Button style={{ marginTop: '.7em' }} onClick={upLoadText} type="primary">自动生成</Button>
+                <Button
+                    type="primary"
+                    onClick={handleUpload}
+                    disabled={fileList.length === 0 && picList.length === 0}
+                    loading={uploading}
+                    style={{
+                        marginTop: 16,
+                    }}
+                >
+                    {uploading ? '识别中...' : '立刻识别'}
+                </Button>
+                <Button style={{ marginTop: '.7em', marginLeft: '1em' }} onClick={upLoadText} type="primary">自动生成</Button>
             </div>
         </ >
     );
