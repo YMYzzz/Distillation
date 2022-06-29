@@ -7,7 +7,7 @@ import { isLogined } from './tools';
 const RequireAuth = ({ children }) => {
     const authed = isLogined()
 
-    return authed === 'true' ? (
+    return authed ? (
         children
     ) : (
         <Navigate to="/login" replace /> // 跳转到登录

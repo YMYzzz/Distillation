@@ -70,11 +70,10 @@ const TextLoader = (props) => {
 
     const handleUpload = () => {
         if (fileList.length) {
-            const doc = fileList[0].originFileObj
+            const doc = {'doc':fileList[0].originFileObj}
             setUploading(true); // You can use any AJAX library you like
 
-            axios.post('http://127.0.0.1:5000/api/article/doc',
-                { doc },
+            axios.post('http://127.0.0.1:5000/api/article/doc', doc,
                 {
                     headers: { 'Content-Type': 'multipart/form-data' }
                 }).then((res) => {
@@ -87,26 +86,24 @@ const TextLoader = (props) => {
                 });
         }
         if (picList.length) {
-            // const pics = []
             const formData = new FormData();
             picList.forEach((pic) => {
-                // pics.push(pic.originFileObj);
-                formData.append('image', pic.originFileObj);
+                formData.append('image[]', pic.originFileObj);
             });
             setUploading(true); // You can use any AJAX library you like
 
-            axios.post('http://127.0.0.1:5000/api/article/ocr',
-                { image: formData },
+            axios.post('http://127.0.0.1:5000/api/article/ocr', formData,
                 {
                     headers: { 'Content-Type': 'multipart/form-data' }
-                }).then((res) => {
-                    const data = res.data
-                    console.log(data)
-                }).catch((err) => {
-                    console.log(err)
-                }).finally(() => {
-                    setUploading(false);
-                });
+                }
+            ).then((res) => {
+                const data = res.data
+                console.log(data)
+            }).catch((err) => {
+                console.log(err)
+            }).finally(() => {
+                setUploading(false);
+            });
         }
 
     };
@@ -125,8 +122,13 @@ const TextLoader = (props) => {
         })
     }
 
-    const beforeUpload = (file) => {
+    const beforeDocUpload = (file) => {
         setFileList([...fileList, file]);
+        return false;
+    }
+
+    const beforePicUpload = (file) => {
+        setPicList([...picList, file]);
         return false;
     }
 
@@ -147,7 +149,7 @@ const TextLoader = (props) => {
                             onPreview={handlePreview}
                             onChange={handleFileChange}
                             accept=".doc,.docx,.txt"
-                            beforeUpload
+                            beforeUpload={beforeDocUpload}
                         >
                             {(fileList.length >= 1 || picList.length) ? null : uploadFileButton}
                         </Upload>
@@ -162,6 +164,7 @@ const TextLoader = (props) => {
                             onPreview={handlePreview}
                             onChange={handlePicChange}
                             accept=".png,.jpg,.jpeg,.bmp"
+                            beforeUpload={beforePicUpload}
                         >
                             {(picList.length >= 5 || fileList.length) ? null : uploadPicButton}
                         </Upload>
