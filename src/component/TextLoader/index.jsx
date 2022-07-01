@@ -5,6 +5,8 @@ import { Upload, Modal, Input, Button, message, Tooltip } from 'antd';
 import axios from 'axios'
 import { UploadOutlined, PictureOutlined, PlusOutlined } from '@ant-design/icons';
 import './TextLoader.css'
+import { getToken } from '../../utils/tools'
+
 const { TextArea } = Input;
 
 const getBase64 = (file) =>
@@ -121,6 +123,24 @@ const TextLoader = (props) => {
             console.log(err)
         })
     }
+    
+    const saveRecord = () => {
+        //保存当前历史记录
+        axios.post('http://127.0.0.1:5000/api/article/save', {
+            body: { 
+                content: text,
+                title: setTitle,
+                abstract: setAbstract
+            }
+        }, {
+            headers: { 'Authorization': getToken() }
+        }).then((res) => {
+            const data = res.data
+            console.log(data)
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
 
     const beforeDocUpload = (file) => {
         setFileList([...fileList, file]);
@@ -206,6 +226,8 @@ const TextLoader = (props) => {
                     {uploading ? '识别中...' : '立刻识别'}
                 </Button>
                 <Button style={{ marginTop: '.7em', marginLeft: '1em' }} onClick={upLoadText} type="primary">自动生成</Button>
+                <Button style={{ marginTop: '.7em', marginLeft: '1em' }} onClick={saveRecord} type="primary">保存记录</Button>
+
             </div>
         </ >
     );
