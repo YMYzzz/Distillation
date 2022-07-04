@@ -1,8 +1,9 @@
 // 用户编辑页面，默认状态下显示为主页
 import React, { useState, useEffect } from 'react';
+import { notification } from 'antd';
 import axios from 'axios'
 import { useParams } from 'react-router-dom';
-import TextLoader from '../TextLoader'
+import TextLoader from '../TextLoader/index'
 import ShowArea from '../ShowArea';
 import { getToken } from '../../utils/tools'
 
@@ -28,6 +29,36 @@ const EditArea = () => {
 			})
 		}
 	}, []);
+
+	const saveRecord = () => {
+		if (!text || !title || !abstract) {
+			openNotification()
+		}
+		else {
+			//保存当前历史记录
+			axios.post('http://127.0.0.1:5000/api/article/save', {
+				content: text,
+				title: title,
+				abstract: abstract
+			}, {
+				headers: { 'Authorization': getToken() }
+			}).then((res) => {
+				const data = res.data
+				console.log(data)
+			}).catch((err) => {
+				console.log(err)
+			})
+		}
+
+	}
+
+	const openNotification = () => {
+		notification.info({
+			message: `有空白信息`,
+			description:
+				'您输入的文章或自动生成的摘要或标题中有空白，请检查后再保存'
+		});
+	};
 
 	return (
 		<div
@@ -56,7 +87,7 @@ const EditArea = () => {
 				justifyContent: 'center',
 				alignItems: 'center',
 			}}>
-				<TextLoader setTitle={setTitle} setAbstract={setAbstract} text={text}></TextLoader>
+				<TextLoader setTitle={setTitle} setAbstract={setAbstract} text={text} setText={setText} saveRecord={saveRecord}></TextLoader>
 			</div>
 		</div>
 	);

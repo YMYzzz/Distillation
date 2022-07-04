@@ -1,11 +1,10 @@
 // 用于用户上传文本或使用上传文档或使用图片OCR功能的入口文件
 
 import React, { useState } from 'react';
-import { Upload, Modal, Input, Button, message, Tooltip } from 'antd';
+import { Upload, Modal, Input, Button, Tooltip } from 'antd';
 import axios from 'axios'
 import { UploadOutlined, PictureOutlined, PlusOutlined } from '@ant-design/icons';
 import './TextLoader.css'
-import { getToken } from '../../utils/tools'
 
 const { TextArea } = Input;
 
@@ -20,9 +19,10 @@ const getBase64 = (file) =>
     });
 
 const TextLoader = (props) => {
-    const { setTitle, setAbstract, text } = props
+    const { setTitle, setAbstract, text, setText, saveRecord } = props
 
     const [uploading, setUploading] = useState(false);
+    const [generating, setGenerating] = useState(false);
     const [previewVisible, setPreviewVisible] = useState(false);
     const [previewImage, setPreviewImage] = useState('');
     const [previewTitle, setPreviewTitle] = useState('');
@@ -72,7 +72,7 @@ const TextLoader = (props) => {
 
     const handleUpload = () => {
         if (fileList.length) {
-            const doc = {'doc':fileList[0].originFileObj}
+            const doc = { 'doc': fileList[0].originFileObj }
             setUploading(true); // You can use any AJAX library you like
 
             axios.post('http://127.0.0.1:5000/api/article/doc', doc,
@@ -111,35 +111,21 @@ const TextLoader = (props) => {
     };
 
     const upLoadText = () => {
+        setGenerating(true);
         // 上传文本文档并获取返回值（标题、摘要）
-        axios.post('http://127.0.0.1:5000/api/article/text', {
-            body: { content: text }
+        axios.post('http://127.0.0.1:5000/api/article/generate', {
+            content: text
         }).then((res) => {
             const data = res.data
             console.log(data)
             setTitle(data.data.title)
             setAbstract(data.data.abstract)
+
         }).catch((err) => {
             console.log(err)
-        })
-    }
-    
-    const saveRecord = () => {
-        //保存当前历史记录
-        axios.post('http://127.0.0.1:5000/api/article/save', {
-            body: { 
-                content: text,
-                title: setTitle,
-                abstract: setAbstract
-            }
-        }, {
-            headers: { 'Authorization': getToken() }
-        }).then((res) => {
-            const data = res.data
-            console.log(data)
-        }).catch((err) => {
-            console.log(err)
-        })
+        }).finally(() => {
+            setGenerating(false);
+        });
     }
 
     const beforeDocUpload = (file) => {
@@ -150,6 +136,11 @@ const TextLoader = (props) => {
     const beforePicUpload = (file) => {
         setPicList([...picList, file]);
         return false;
+    }
+
+    const onChange = (e) => {
+        console.log(e.target.value)
+        setText(e.target.value)
     }
 
     return (
@@ -163,7 +154,6 @@ const TextLoader = (props) => {
                 }}>
                     <Tooltip title=".doc / .docx / .txt">
                         <Upload
-                            // action="http://127.0.0.1:5000/api/article/doc"
                             listType="picture-card"
                             fileList={fileList}
                             onPreview={handlePreview}
@@ -176,7 +166,6 @@ const TextLoader = (props) => {
                     </Tooltip>
                     <Tooltip title=".png / .jpg / .jpeg / .bmp">
                         <Upload
-                            // action="http://localhost:3000/"
                             listType="picture-card"
                             // 多选的情况下可能会造成个别图片上传错误，并且如果用户上传超过上限的图片需要做额外限制
                             multiple={true}
@@ -191,7 +180,7 @@ const TextLoader = (props) => {
                     </Tooltip>
                 </div>
                 <div>
-                    <Modal visible={previewVisible} title={previewTitle} footer={null} onCancel={handleCancel}>
+                    <Modal maskTransitionName="" transitionName="" visible={previewVisible} title={previewTitle} footer={null} onCancel={handleCancel}>
                         <img
                             alt="example"
                             style={{
@@ -207,6 +196,7 @@ const TextLoader = (props) => {
                 showCount
                 maxLength={10000}
                 value={text}
+                onChange={onChange}
                 style={{
                     height: '70%',
                     width: '80%',
@@ -225,11 +215,19 @@ const TextLoader = (props) => {
                 >
                     {uploading ? '识别中...' : '立刻识别'}
                 </Button>
-                <Button style={{ marginTop: '.7em', marginLeft: '1em' }} onClick={upLoadText} type="primary">自动生成</Button>
+                <Button
+                    style={{ marginTop: '.7em', marginLeft: '1em' }}
+                    disabled={text.length === 0}
+                    loading={generating}
+                    onClick={upLoadText}
+                    type="primary"
+                >
+                    {generating ? '正在生成...' : '自动生成'}
+                </Button>
                 <Button style={{ marginTop: '.7em', marginLeft: '1em' }} onClick={saveRecord} type="primary">保存记录</Button>
 
             </div>
-        </ >
+        </>
     );
 };
 
