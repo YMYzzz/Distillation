@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Upload, Modal, Input, Button, Tooltip } from 'antd';
 import axios from 'axios'
-import { UploadOutlined, PictureOutlined, PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
 import './TextLoader.css'
 
 const { TextArea } = Input;
@@ -81,6 +81,9 @@ const TextLoader = (props) => {
                 }).then((res) => {
                     const data = res.data
                     console.log(data)
+                    if (data.meta.status === 2000) {
+                        setText(data.data.content)
+                    }
                 }).catch((err) => {
                     console.log(err)
                 }).finally(() => {
@@ -101,6 +104,9 @@ const TextLoader = (props) => {
             ).then((res) => {
                 const data = res.data
                 console.log(data)
+                if (data.meta.status === 2000) {
+                    setText(data.data.content)
+                }
             }).catch((err) => {
                 console.log(err)
             }).finally(() => {
@@ -118,9 +124,10 @@ const TextLoader = (props) => {
         }).then((res) => {
             const data = res.data
             console.log(data)
-            setTitle(data.data.title)
-            setAbstract(data.data.abstract)
-
+            if (data.meta.status === 2000) {
+                setTitle(data.data.title)
+                setAbstract(data.data.abstract)
+            }
         }).catch((err) => {
             console.log(err)
         }).finally(() => {
