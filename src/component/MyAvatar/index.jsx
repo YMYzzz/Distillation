@@ -1,5 +1,4 @@
 // 扩展头像功能，悬浮提醒，点击登录
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Avatar, Popover, Divider } from 'antd';
@@ -47,6 +46,20 @@ const MyAvatar = () => {
         </div >
     );
 
+    // const getAvatar = () => {
+    //     axios.get('http://127.0.0.1:5000/api/user/info', {
+    //         headers: { 'Authorization': getToken() }
+    //     }).then((res) => {
+    //         const data = res.data
+    //         if (data.meta.status === 2000) {
+    //             const userInfo = data.data.user
+    //             setIcon(userInfo.icon)
+    //         }
+    //     }).catch((err) => {
+	// 		setIcon(null)
+	// 	})
+    // }
+
     return (
         <>
             {/* 条件判断是否登录，若未登录则包裹popover，若已登录则不需要包裹并且头像图片显示用户头像 */}
@@ -57,6 +70,7 @@ const MyAvatar = () => {
                         cursor: "pointer"
                     }}
                     size={40}
+                    // src={isLogin ? icon : null}
                     icon={<UserOutlined />} />
             </Popover>
         </>

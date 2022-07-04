@@ -150,7 +150,6 @@ const LoginMod = () => {
             if (passwordCheck) errors.push(passwordCheck);
 
             setFormErrors(errors);
-            //const data = { phoneNum, password };
             const requestOptions = {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -174,7 +173,7 @@ const LoginMod = () => {
 
             <div style={{ display: 'flex', alignItems: 'center', fontWeight: 100, marginBottom: '25px' }}>
                 <FaChessBishop style={{ marginRight: '10px', fontSize: '1.3em', color: '#83afe0' }} />
-                <span>Abstract Text2Title Service</span>
+                <span>Distillation 在线服务</span>
             </div>
 
             <h1 className={classes.cardHeader}>登录</h1>

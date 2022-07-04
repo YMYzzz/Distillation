@@ -150,7 +150,6 @@ const RegisterMod = () => {
                         clearInterval(t1)
                     }
                 }, 1000);
-                // const data = {  };
                 const requestOptions = {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -217,74 +216,74 @@ const RegisterMod = () => {
             if (result.meta.status == '2000') setResponse('注册成功, 请登录');
         }
 
-        return (<div className={classes.loginCard}>
-
-            <div style={{ display: 'flex', alignItems: 'center', fontWeight: 100, marginBottom: '25px' }}>
-                <FaChessBishop style={{ marginRight: '10px', fontSize: '1.3em', color: '#83afe0' }} />
-                <span>Abstract Text2Title Service</span>
-            </div>
-
-            <h1 className={classes.cardHeader}>注册账户</h1>
-
-            {!response ? <div className="form">
-
-                <div>
-                    <Label>
-                        <span>请输入手机号</span>
-                        <div style={{ display: "flex" }}>
-                            <Input type="text" value={phoneNum} onChange={onChangeInput} />
-                            <Button type="button" disabled={num !== 0} onClick={handleSend}>{num == 0 ? '发送验证码' : num + "秒"}</Button>
-                        </div>
-                    </Label>
+        return (
+            <div className={classes.loginCard}>
+                <div style={{ display: 'flex', alignItems: 'center', fontWeight: 100, marginBottom: '25px' }}>
+                    <FaChessBishop style={{ marginRight: '10px', fontSize: '1.3em', color: '#83afe0' }} />
+                    <span>Distillation 在线服务</span>
                 </div>
 
-                <form onSubmit={registrationSubmitHandler}>
+                <h1 className={classes.cardHeader}>注册账户</h1>
 
-                    {formErrors.length ? <Alert title="注册失败">
-                        {formErrors.map(err => <div>{err}</div>)}
-                    </Alert> : ''}
+                {!response ? <div className="form">
 
                     <div>
                         <Label>
-                            <span>用户名</span>
-                            <Input value={username} onChange={(e) => setUsername(e.target.value)} />
+                            <span>请输入手机号</span>
+                            <div style={{ display: "flex" }}>
+                                <Input type="text" value={phoneNum} onChange={onChangeInput} />
+                                <Button type="button" disabled={num !== 0} onClick={handleSend}>{num == 0 ? '发送验证码' : num + "秒"}</Button>
+                            </div>
                         </Label>
                     </div>
 
-                    <div>
-                        <Label>
-                            <span>请设定密码</span>
-                            <Input placeholder="包含数字、大小写字母且长度为8-16位" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                        </Label>
-                    </div>
+                    <form onSubmit={registrationSubmitHandler}>
 
-                    <div>
-                        <Label>
-                            <span>请重复输入密码</span>
-                            <Input type="password" value={repeatPassword} onChange={(e) => setRepeatPassword(e.target.value)} />
-                        </Label>
-                    </div>
+                        {formErrors.length ? <Alert title="注册失败">
+                            {formErrors.map(err => <div>{err}</div>)}
+                        </Alert> : ''}
 
-                    <div>
-                        <Label>
-                            <span>请输入验证码</span>
-                            <Input placeholder="四位验证码" type="text" value={code} onChange={(e) => setCode(e.target.value)} />
-                        </Label>
-                    </div>
+                        <div>
+                            <Label>
+                                <span>用户名</span>
+                                <Input value={username} onChange={(e) => setUsername(e.target.value)} />
+                            </Label>
+                        </div>
 
-                    <div style={{ marginTop: '10px' }}>
-                        <Button type="submit" fullWidth>创建账户</Button>
-                        <Divider />
-                    </div>
+                        <div>
+                            <Label>
+                                <span>请设定密码</span>
+                                <Input placeholder="包含数字、大小写字母且长度为8-16位" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                            </Label>
+                        </div>
 
-                </form>
+                        <div>
+                            <Label>
+                                <span>请重复输入密码</span>
+                                <Input type="password" value={repeatPassword} onChange={(e) => setRepeatPassword(e.target.value)} />
+                            </Label>
+                        </div>
 
-            </div> : <Alert type="success">{response}</Alert>
-            }
+                        <div>
+                            <Label>
+                                <span>请输入验证码</span>
+                                <Input placeholder="四位验证码" type="text" value={code} onChange={(e) => setCode(e.target.value)} />
+                            </Label>
+                        </div>
 
-            <Button fullWidth onClick={backToLogin} color="green" iconLeft={<FaArrowLeft />}>回到登录</Button>
+                        <div style={{ marginTop: '10px' }}>
+                            <Button type="submit" fullWidth>创建账户</Button>
+                            <Divider />
+                        </div>
 
-        </div>)
+                    </form>
+
+                </div> : <Alert type="success">{response}</Alert>
+                }
+
+                <Button fullWidth onClick={backToLogin} color="green" iconLeft={<FaArrowLeft />}>回到登录</Button>
+
+            </div>)
     }
 
     RegistrationPage = withStyles(registrationPageStyles)(RegistrationPage);
