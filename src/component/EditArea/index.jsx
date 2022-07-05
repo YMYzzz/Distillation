@@ -70,7 +70,7 @@ const EditArea = () => {
 			}}
 		>
 			<div style={{
-				height: '30%',
+				height: '22%',
 				width: '70%',
 				margin: '0 auto',
 				marginBottom:'2em'
@@ -78,7 +78,7 @@ const EditArea = () => {
 				<ShowArea title={title} abstract={abstract}></ShowArea>
 			</div>
 			<div style={{
-				height: '64%',
+				height: '73%',
 				width: '70%',
 				margin: '0 auto',
 				borderRadius: '0.75em',

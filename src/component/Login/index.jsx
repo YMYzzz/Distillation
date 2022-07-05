@@ -67,7 +67,7 @@ const LoginMod = () => {
     function Divider(props) {
         return <div style={{ display: 'flex', alignItems: 'center' }}>
             <div style={{ height: '1px', width: '100%', background: '#d1d5db' }}></div>
-            <p style={{ margin: '10px', fontWeight: 100, color: '#94979c' }}>OR</p>
+            <p style={{ margin: '10px', fontWeight: 100, color: '#94979c' }}>或</p>
             <div style={{ height: '1px', width: '100%', background: '#d1d5db' }}></div>
         </div>
     }
@@ -162,11 +162,10 @@ const LoginMod = () => {
             if (result.meta.status == '2000') {
                 setSuccess(true);
                 localStorage.setItem('token', result.data.token);
+                setTimeout(() => {
+                    navigate('/')
+                }, 2000);
             }
-            setTimeout(() => {
-                navigate('/')
-            }, 2000);
-
         }
 
         return <div className={classes.loginCard}>
@@ -198,7 +197,7 @@ const LoginMod = () => {
                     <div name="password" validate={passwordValidate}>
                         <Label>
                             <span>密码</span>
-                            <Input placeholder="包含数字、大小写字母且长度为8-16位" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                            <Input placeholder="包含数字、大小写字母且长度为6-16位" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                         </Label>
                     </div>
 
