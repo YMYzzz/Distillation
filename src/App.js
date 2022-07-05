@@ -3,11 +3,13 @@ import { Routes, Route } from 'react-router-dom'
 import { Layout } from 'antd';
 import RequireAuth from './utils/auth';
 import MyAvatar from './component/MyAvatar';
+import HomeButton from './component/HomeButton';
 import EditArea from './component/EditArea'
 import HistoryList from './component/HistoryList'
 import Register from './component/Register'
 import Login from './component/Login'
 import UserInfo from './component/UserInfo'
+
 
 
 const { Header, Content, Footer } = Layout;
@@ -42,6 +44,7 @@ const App = () => {
 				}}
 			>
 				<div style={{ float: 'right' }}>
+					<HomeButton></HomeButton>
 					<MyAvatar></MyAvatar>
 				</div>
 			</Header>
