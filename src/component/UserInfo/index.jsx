@@ -43,7 +43,7 @@ const UserInfo = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:5000/api/user/info', {
+        axios.get('api/user/info', {
             headers: { 'Authorization': getToken() }
         }).then((res) => {
             const data = res.data
@@ -79,7 +79,7 @@ const UserInfo = () => {
     };
 
     const uploadIcon = () => {
-        axios.post('http://127.0.0.1:5000/api/user/icon', {
+        axios.post('api/user/icon', {
             image: image
         }, {
             headers: { 'Authorization': getToken(),'Content-Type': 'multipart/form-data' }
@@ -136,7 +136,7 @@ const UserInfo = () => {
             return
         }
         setConfirmLoading(true);
-        axios.post('http://127.0.0.1:5000/api/user/pwd', {
+        axios.post('api/user/pwd', {
             password: oldPwd,
             new_password: newPwd
         }, {
@@ -192,7 +192,7 @@ const UserInfo = () => {
                     listType="picture-card"
                     className="avatar-uploader"
                     showUploadList={false}
-                    // action="http://127.0.0.1:5000/api/user/icon"
+                    // action="api/user/icon"
                     beforeUpload={beforeUpload}
                     onChange={handleChange}
                 >

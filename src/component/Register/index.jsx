@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import * as reactIconsFa from "react-icons/fa";
 import * as reactIconsRi from "react-icons/ri";
 import * as reactJss from "react-jss";
+import axios from 'axios';
+
 import {
     mainTheme, lightTheme, darkTheme,
     loginLayoutStyles, buttonStyles, inputStyles,
@@ -150,15 +152,23 @@ const RegisterMod = () => {
                         clearInterval(t1)
                     }
                 }, 1000);
-                const requestOptions = {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 'phone': phoneNum })
-                };
-                const response = await fetch('http://127.0.0.1:5000/api/user/valid_code', requestOptions);
-                const result = await response.json();
-                console.log(response.status);
-                console.log(result);
+                axios.post('api/user/valid_code', {
+                    'phone': phoneNum
+                }).then((res) => {
+                    const data = res.data
+                    console.log(data)
+                }).catch((err) => {
+                    console.log(err)
+                });
+                // const requestOptions = {
+                //     method: 'POST',
+                //     headers: { 'Content-Type': 'application/json' },
+                //     body: JSON.stringify({ 'phone': phoneNum })
+                // };
+                // const response = await fetch('api/user/valid_code', requestOptions);
+                // const result = await response.json();
+                // console.log(response.status);
+                // console.log(result);
             } else {
                 alert('手机号格式不正确')
             }
@@ -201,19 +211,33 @@ const RegisterMod = () => {
 
             setFormErrors(errors);
             //const data = { "phone":phoneNum, username, password ,code , "confirm_password":repeatPassword};
-            const requestOptions = {
-                method: 'POST',
-                mode: 'cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ "phone": phoneNum, username, password, code, "confirm_password": repeatPassword })
-            };
-            const response = await fetch('http://127.0.0.1:5000/api/user/register', requestOptions);
-            const result = await response.json();
-            console.log(response.status);
-            console.log(result);
+            // const requestOptions = {
+            //     method: 'POST',
+            //     mode: 'cors',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify({ "phone": phoneNum, username, password, code, "confirm_password": repeatPassword })
+            // };
+            // const response = await fetch('api/user/register', requestOptions);
+            // const result = await response.json();
+            // console.log(response.status);
+            // console.log(result);
+            axios.post('api/user/register', {
+                "phone": phoneNum,
+                username,
+                password,
+                code,
+                "confirm_password": repeatPassword
+            }).then((res) => {
+                const data = res.data
+                console.log(data)
+                if (data.meta.status == '2000') {
+                    setResponse('注册成功, 请登录');
+                }
+            }).catch((err) => {
+                console.log(err)
+            });
             //TODO: check the response.status
             //console.log(result['meta']['status']);
-            if (result.meta.status == '2000') setResponse('注册成功, 请登录');
         }
 
         return (

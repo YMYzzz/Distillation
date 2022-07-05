@@ -75,7 +75,7 @@ const TextLoader = (props) => {
             const doc = { 'doc': fileList[0].originFileObj }
             setUploading(true); // You can use any AJAX library you like
 
-            axios.post('http://127.0.0.1:5000/api/article/doc', doc,
+            axios.post('api/article/doc', doc,
                 {
                     headers: { 'Content-Type': 'multipart/form-data' }
                 }).then((res) => {
@@ -97,7 +97,7 @@ const TextLoader = (props) => {
             });
             setUploading(true); // You can use any AJAX library you like
 
-            axios.post('http://127.0.0.1:5000/api/article/ocr', formData,
+            axios.post('api/article/ocr', formData,
                 {
                     headers: { 'Content-Type': 'multipart/form-data' }
                 }
@@ -119,7 +119,7 @@ const TextLoader = (props) => {
     const upLoadText = () => {
         setGenerating(true);
         // 上传文本文档并获取返回值（标题、摘要）
-        axios.post('http://127.0.0.1:5000/api/article/generate', {
+        axios.post('api/article/generate', {
             content: text
         }).then((res) => {
             const data = res.data

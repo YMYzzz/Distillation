@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom'
 import { Layout } from 'antd';
+import axios from 'axios'
 import RequireAuth from './utils/auth';
 import MyAvatar from './component/MyAvatar';
 import HomeButton from './component/HomeButton';
@@ -12,6 +13,7 @@ import UserInfo from './component/UserInfo'
 
 
 
+axios.defaults.baseURL = "http://10.15.20.228:5000";
 const { Header, Content, Footer } = Layout;
 
 const App = () => {
@@ -57,8 +59,8 @@ const App = () => {
 				}}
 			>
 				<Routes>
-					<Route path="/" element={<EditArea />} />
-					<Route path="/article/:id" element={<EditArea />} />
+					<Route path="/" element={<EditArea />} key='home'/>
+					<Route path="/article/:id" element={<EditArea key='detail'/>} />
 					<Route path="/history" element={
 						<RequireAuth>
 							<HistoryList />

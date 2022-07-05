@@ -1,11 +1,15 @@
 // 用户编辑页面，默认状态下显示为主页
 import React, { useState, useEffect } from 'react';
-import { notification } from 'antd';
+import { notification, message } from 'antd';
 import axios from 'axios'
 import { useParams } from 'react-router-dom';
 import TextLoader from '../TextLoader/index'
 import ShowArea from '../ShowArea';
 import { getToken } from '../../utils/tools'
+
+const success = (msg) => {
+	message.success(msg);
+};
 
 const EditArea = () => {
 	const [title, setTitle] = useState('')
@@ -15,7 +19,7 @@ const EditArea = () => {
 
 	useEffect(() => {
 		if (params.id) {
-			axios.get('http://127.0.0.1:5000/api/article/detail/' + params.id, {
+			axios.get('api/article/detail/' + params.id, {
 				headers: { 'Authorization': getToken() }
 			}).then((res) => {
 				const data = res.data
@@ -36,7 +40,7 @@ const EditArea = () => {
 		}
 		else {
 			//保存当前历史记录
-			axios.post('http://127.0.0.1:5000/api/article/save', {
+			axios.post('api/article/save', {
 				content: text,
 				title: title,
 				abstract: abstract
@@ -44,6 +48,9 @@ const EditArea = () => {
 				headers: { 'Authorization': getToken() }
 			}).then((res) => {
 				const data = res.data
+				if (data.meta.status === 2000) {
+					success('保存成功');
+				}
 				console.log(data)
 			}).catch((err) => {
 				console.log(err)
@@ -73,7 +80,7 @@ const EditArea = () => {
 				height: '22%',
 				width: '70%',
 				margin: '0 auto',
-				marginBottom:'2em'
+				marginBottom: '2em'
 			}}>
 				<ShowArea title={title} abstract={abstract}></ShowArea>
 			</div>

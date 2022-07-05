@@ -3,12 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import * as reactIconsFa from "react-icons/fa";
 import * as reactIconsRi from "react-icons/ri";
 import * as reactJss from "react-jss";
+import { setToken } from '../../utils/tools'
+import axios from 'axios';
+
 import {
     mainTheme, lightTheme, darkTheme,
     loginLayoutStyles, loginPageStyles, buttonStyles, inputStyles,
     toggleThemeButtonStyles,
     labelStyles, alertStyles
 } from '../../style/mainStyle';
+
 
 const LoginMod = () => {
 
@@ -150,22 +154,37 @@ const LoginMod = () => {
             if (passwordCheck) errors.push(passwordCheck);
 
             setFormErrors(errors);
-            const requestOptions = {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 'username': phoneNum, password })
-            };
-            const response = await fetch('http://127.0.0.1:5000/api/user/login', requestOptions);
-            const result = await response.json();
-            console.log(response.status);
-            console.log(result);
-            if (result.meta.status == '2000') {
+            // const requestOptions = {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify({ 'username': phoneNum, password })
+            // };
+            axios.post('api/user/login', {
+                'username': phoneNum,
+                password
+            }).then((res) => {
+                const data = res.data
+                console.log(data)
                 setSuccess(true);
-                localStorage.setItem('token', result.data.token);
+                setToken(data.data.token)
                 setTimeout(() => {
-                    navigate('/')
+                    window.location.replace('/')
+                    // navigate('/')
                 }, 2000);
-            }
+            }).catch((err) => {
+                console.log(err)
+            });
+            // const response = await fetch('api/user/login', requestOptions);
+            // const result = await response.json();
+            // console.log(response.status);
+            // console.log(result);
+            // if (result.meta.status == '2000') {
+            //     setSuccess(true);
+            //     localStorage.setItem('token', result.data.token);
+            //     setTimeout(() => {
+            //         navigate('/')
+            //     }, 2000);
+            // }
         }
 
         return <div className={classes.loginCard}>

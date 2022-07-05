@@ -47,7 +47,7 @@ const MyAvatar = () => {
     );
 
     // const getAvatar = () => {
-    //     axios.get('http://127.0.0.1:5000/api/user/info', {
+    //     axios.get('api/user/info', {
     //         headers: { 'Authorization': getToken() }
     //     }).then((res) => {
     //         const data = res.data

@@ -6,7 +6,7 @@ import { UserOutlined } from '@ant-design/icons';
 import axios from 'axios'
 import { getToken } from '../../utils/tools'
 const count = 5;
-const dataUrl = `http://127.0.0.1:5000/api/article/history`;
+const dataUrl = `api/article/history`;
 
 const HistoryList = () => {
 	const [initLoading, setInitLoading] = useState(true);
@@ -29,7 +29,7 @@ const HistoryList = () => {
 	const deleteRecord = (id, title) => {
 		// delete
 		console.log(id);
-		axios.get('http://127.0.0.1:5000/api/article/delete/' + id, {
+		axios.get('api/article/delete/' + id, {
 			headers: { 'Authorization': getToken() }
 		}).then((res) => {
 			const data = res.data
