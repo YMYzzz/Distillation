@@ -220,7 +220,7 @@ const TextLoader = (props) => {
                         marginTop: 16,
                     }}
                 >
-                    {uploading ? '识别中...' : '立刻识别'}
+                    {uploading ? '提取中...' : '立刻提取'}
                 </Button>
                 <Button
                     style={{ marginTop: '.7em', marginLeft: '1em' }}
