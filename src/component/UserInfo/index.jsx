@@ -1,8 +1,8 @@
 // 用户个人主页以及修改密码上传头像
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Descriptions, Button, Avatar, Modal, Input, message, Upload } from 'antd';
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { Descriptions, Button, Modal, Input, message, Upload } from 'antd';
+import { LoadingOutlined, PlusOutlined, UserOutlined } from '@ant-design/icons';
 import axios from 'axios'
 import { getToken, removeToken } from '../../utils/tools'
 
@@ -82,7 +82,7 @@ const UserInfo = () => {
         axios.post('api/user/icon', {
             image: image
         }, {
-            headers: { 'Authorization': getToken(),'Content-Type': 'multipart/form-data' }
+            headers: { 'Authorization': getToken(), 'Content-Type': 'multipart/form-data' }
         }).then((res) => {
             const data = res.data
             console.log(data)
@@ -98,7 +98,8 @@ const UserInfo = () => {
 
     const uploadButton = (
         <div>
-            {loading ? <LoadingOutlined /> : <PlusOutlined />}
+            {/* {loading ? <LoadingOutlined /> : <PlusOutlined />} */}
+            {<UserOutlined />}
             <div
                 style={{
                     marginTop: 8,
@@ -209,7 +210,7 @@ const UserInfo = () => {
                     )}
                 </Upload>
                 <div>
-                    <Button onClick={uploadIcon}>点击上传头像</Button>
+                    <Button onClick={uploadIcon}>点击上传</Button>
                 </div>
             </div>
 
