@@ -1,11 +1,12 @@
 // 扩展头像功能，悬浮提醒，点击登录
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Avatar, Popover, Divider } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { isLogined, removeToken } from '../../utils/tools'
+import { isLogined, removeToken, getToken } from '../../utils/tools'
+import { connect } from 'react-redux'
 
-const MyAvatar = () => {
+const MyAvatar = ({ icon }) => {
     // 用于存储用户是否登录的状态，判断头像悬浮窗渲染样式
     const [isLogin, setIsLogin] = useState(isLogined())
 
@@ -46,20 +47,6 @@ const MyAvatar = () => {
         </div >
     );
 
-    // const getAvatar = () => {
-    //     axios.get('api/user/info', {
-    //         headers: { 'Authorization': getToken() }
-    //     }).then((res) => {
-    //         const data = res.data
-    //         if (data.meta.status === 2000) {
-    //             const userInfo = data.data.user
-    //             setIcon(userInfo.icon)
-    //         }
-    //     }).catch((err) => {
-	// 		setIcon(null)
-	// 	})
-    // }
-
     return (
         <>
             {/* 条件判断是否登录，若未登录则包裹popover，若已登录则不需要包裹并且头像图片显示用户头像 */}
@@ -70,11 +57,19 @@ const MyAvatar = () => {
                         cursor: "pointer"
                     }}
                     size={40}
-                    // src={isLogin ? icon : null}
+                    src={isLogin ? icon : null}
                     icon={<UserOutlined />} />
             </Popover>
         </>
     );
 };
 
-export default MyAvatar;
+const mapStateToProps = (state) => {
+    return {
+        icon: state.userInfo.icon
+    }
+}
+export default connect(
+    mapStateToProps,
+    null
+)(MyAvatar);

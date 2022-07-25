@@ -159,13 +159,13 @@ const TextLoader = (props) => {
                     alignItems: 'center',
                     marginBottom: '.7em'
                 }}>
-                    <Tooltip title=".doc / .docx / .txt">
+                    <Tooltip title=".doc / .docx / .txt / .pdf">
                         <Upload
                             listType="picture-card"
                             fileList={fileList}
                             onPreview={handlePreview}
                             onChange={handleFileChange}
-                            accept=".doc,.docx,.txt"
+                            accept=".doc,.docx,.txt,.pdf"
                             beforeUpload={beforeDocUpload}
                         >
                             {(fileList.length >= 1 || picList.length) ? null : uploadFileButton}

@@ -1,10 +1,13 @@
 // 用户个人主页以及修改密码上传头像
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Descriptions, Button, Modal, Input, message, Upload } from 'antd';
-import { LoadingOutlined, PlusOutlined, UserOutlined } from '@ant-design/icons';
+import { Descriptions, Button, Modal, Input, message, Upload, Tooltip } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 import axios from 'axios'
-import { getToken, removeToken } from '../../utils/tools'
+import { getToken, removeToken, isLogined } from '../../utils/tools'
+import { setUserIcon } from '../../actions';
+import { connect } from 'react-redux'
+import './UserInfo.css'
 
 const getBase64 = (img, callback) => {
     const reader = new FileReader();
@@ -29,13 +32,12 @@ const beforeUpload = (file) => {
     return false;
 };
 
-const UserInfo = () => {
+const UserInfo = ({ globalUserInfo, setUserIcon }) => {
     const [visible, setVisible] = useState(false);
     const [confirmLoading, setConfirmLoading] = useState(false);
     const [oldPwd, setOldPwd] = useState('');
     const [newPwd, setNewPwd] = useState('');
     const [image, setImage] = useState(null);
-    const [loading, setLoading] = useState(false);
     const [icon, setIcon] = useState('');
     const [userName, setUserName] = useState('');
     const [joinTime, setJoinTime] = useState('')
@@ -43,42 +45,46 @@ const UserInfo = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('api/user/info', {
-            headers: { 'Authorization': getToken() }
-        }).then((res) => {
-            const data = res.data
-            if (data.meta.status === 2000) {
-                const userInfo = data.data.user
-                const time = userInfo.join_time.split(" ")[0].split('-')
-                setJoinTime(time[0] + " 年 " + time[1] + " 月 " + time[2] + " 日")
-                setUserName(userInfo.username)
-                setPhone(userInfo.phone)
-                setIcon(userInfo.icon)
-            }
-            else {
-                warning('用户未登录')
-            }
-        })
+        if (isLogined()) {
+            const { icon, joinTime, phone, userName } = globalUserInfo
+            setJoinTime(joinTime)
+            setUserName(userName)
+            setPhone(phone)
+            setIcon(icon)
+        } else {
+            warning('用户未登录')
+        }
+        // axios.get('api/user/info', {
+        //     headers: { 'Authorization': getToken() }
+        // }).then((res) => {
+        //     const data = res.data
+        //     if (data.meta.status === 2000) {
+        //         const userInfo = data.data.user
+        //         const time = userInfo.join_time.split(" ")[0].split('-')
+        //         setJoinTime(time[0] + " 年 " + time[1] + " 月 " + time[2] + " 日")
+        //         setUserName(userInfo.username)
+        //         setPhone(userInfo.phone)
+        //         setIcon(userInfo.icon)
+        //     }
+        //     else {
+        //         warning('用户未登录')
+        //     }
+        // })
     }, []);
 
     const handleChange = (info) => {
         setImage(info.file)
-        if (info.file.status === 'uploading') {
-            setLoading(true);
-            return;
-        }
-        console.log(info)
-
-        if (info.file.status === 'done') {
-            // Get this url from response in real world.
-            getBase64(info.file.originFileObj, (url) => {
-                setLoading(false);
-                setIcon(url);
-            });
-        }
+        getBase64(info.file, (url) => {
+            setIcon(url);
+        });
+        return;
     };
 
     const uploadIcon = () => {
+        if (image == null) {
+            warning('请选择头像后点击上传')
+            return
+        }
         axios.post('api/user/icon', {
             image: image
         }, {
@@ -88,10 +94,14 @@ const UserInfo = () => {
             console.log(data)
             if (data.meta.status === 2000) {
                 success('头像上传成功')
+                // 分别设置当前页面icon，redux中icon，头像预览
                 setIcon(data.data.icon)
+                setUserIcon(data.data.icon)
+                setImage(null)
             }
         }).catch((err) => {
             console.log(err)
+            setImage(null)
             warning('头像上传失败')
         });
     }
@@ -188,27 +198,35 @@ const UserInfo = () => {
                 {/* <Avatar style={{
                     margin: '20px 0'
                 }} shape="square" size={128} /> */}
-                <Upload
-                    name="image"
-                    listType="picture-card"
-                    className="avatar-uploader"
-                    showUploadList={false}
-                    // action="api/user/icon"
-                    beforeUpload={beforeUpload}
-                    onChange={handleChange}
-                >
-                    {icon ? (
-                        <img
-                            src={icon}
-                            alt="avatar"
-                            style={{
-                                width: '100%',
-                            }}
-                        />
-                    ) : (
-                        uploadButton
-                    )}
-                </Upload>
+                <Tooltip title="点击选择头像">
+                    <div
+                        style={{
+                            width: '104px',
+                            minHeight: '104px',
+                            marginBottom: '10px',
+                        }}>
+                        <Upload
+                            name="image"
+                            listType="picture-card"
+                            className="avatar-uploader"
+                            showUploadList={false}
+                            beforeUpload={beforeUpload}
+                            onChange={handleChange}
+                        >
+                            {icon ? (
+                                <img
+                                    src={icon}
+                                    alt="avatar"
+                                    style={{
+                                        width: '100%',
+                                    }}
+                                />
+                            ) : (
+                                uploadButton
+                            )}
+                        </Upload>
+                    </div>
+                </Tooltip>
                 <div>
                     <Button onClick={uploadIcon}>点击上传</Button>
                 </div>
@@ -266,4 +284,15 @@ const UserInfo = () => {
     )
 };
 
-export default UserInfo;
+
+const mapStateToProps = (state) => {
+    return {
+        globalUserInfo: state.userInfo
+    }
+}
+
+const mapDispatchToProps = { setUserIcon };
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(UserInfo);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, createContext, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as reactIconsFa from "react-icons/fa";
 import * as reactIconsRi from "react-icons/ri";
@@ -14,12 +14,9 @@ import {
 } from '../../style/mainStyle';
 
 
-const LoginMod = () => {
-
-    const { useState, createContext, useContext } = React;
+const Login = () => {
     const { ThemeProvider, withStyles } = reactJss;
-    //const { BrowserRouter, Switch, Route, useHistory } = ReactRouterDOM;
-    const { FaChessBishop, FaPlusCircle, FaArrowLeft } = reactIconsFa;
+    const { FaChessBishop, FaPlusCircle } = reactIconsFa;
     const { RiMoonClearLine, RiSunLine } = reactIconsRi;
 
     const CustomThemeContext = createContext();
@@ -151,40 +148,32 @@ const LoginMod = () => {
 
             let errors = [];
             let passwordCheck = passwordValidate(password);
-            if (passwordCheck) errors.push(passwordCheck);
+            if (passwordCheck) {
+                errors.push(passwordCheck);
+                setFormErrors(errors);
+                return
+            }
 
-            setFormErrors(errors);
-            // const requestOptions = {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify({ 'username': phoneNum, password })
-            // };
             axios.post('api/user/login', {
                 'username': phoneNum,
                 password
             }).then((res) => {
                 const data = res.data
                 console.log(data)
-                setSuccess(true);
-                setToken(data.data.token)
-                setTimeout(() => {
-                    window.location.replace('/')
-                    // navigate('/')
-                }, 2000);
+                if (data.meta.status === 2000) {
+                    setSuccess(true);
+                    setFormErrors([]);
+                    setToken(data.data.token)
+                    setTimeout(() => {
+                        window.location.replace('/')
+                    }, 2000);
+                } else {
+                    errors.push(data.meta.msg);
+                    setFormErrors(errors);
+                }
             }).catch((err) => {
                 console.log(err)
             });
-            // const response = await fetch('api/user/login', requestOptions);
-            // const result = await response.json();
-            // console.log(response.status);
-            // console.log(result);
-            // if (result.meta.status == '2000') {
-            //     setSuccess(true);
-            //     localStorage.setItem('token', result.data.token);
-            //     setTimeout(() => {
-            //         navigate('/')
-            //     }, 2000);
-            // }
         }
 
         return <div className={classes.loginCard}>
@@ -240,5 +229,4 @@ const LoginMod = () => {
     </CustomThemeProvider>
 
 };
-
-export default LoginMod;
+export default Login;

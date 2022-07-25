@@ -5,29 +5,16 @@ import { Link } from 'react-router-dom'
 import { UserOutlined } from '@ant-design/icons';
 import axios from 'axios'
 import { getToken } from '../../utils/tools'
-const count = 5;
-const dataUrl = `api/article/history`;
+import { setHistory } from '../../actions';
+import { connect } from 'react-redux'
+import './HistoryList.css'
 
-const HistoryList = () => {
-	const [initLoading, setInitLoading] = useState(true);
-	const [loading, setLoading] = useState(false);
-	const [data, setData] = useState([]);
-	const [list, setList] = useState([]);
-	useEffect(() => {
-		axios.get(dataUrl, {
-			headers: { 'Authorization': getToken() }
-		}).then((res) => {
-			const data = res.data
-			const articles = data.data.articles
-			setInitLoading(false);
-			setData(articles);
-			setList(articles);
-			console.log(articles)
-		})
-	}, []);
+const HistoryList = ({ history, icon }) => {
+	const [initLoading, setInitLoading] = useState(false);
+	const [list, setList] = useState(history);
 
 	const deleteRecord = (id, title) => {
-		// delete
+		// 删除历史记录
 		console.log(id);
 		axios.get('api/article/delete/' + id, {
 			headers: { 'Authorization': getToken() }
@@ -36,11 +23,13 @@ const HistoryList = () => {
 			console.log(data)
 			if (data.meta.status === 2000) {
 				openNotification(title)
+				const articles = data.data.articles
+				setInitLoading(false);
+				// 分别更新当前页面列表和redux列表
+				setList(articles);
+				setHistory(articles)
 			}
-			const articles = data.data.articles
-			setInitLoading(false);
-			setData(articles);
-			setList(articles);
+
 		}).catch((err) => {
 			console.log(err)
 		})
@@ -56,43 +45,6 @@ const HistoryList = () => {
 		notification.open(args);
 	};
 
-	const onLoadMore = () => {
-		setLoading(true);
-		setList(
-			data.concat(
-				[...new Array(count)].map(() => ({
-					loading: true,
-					name: {},
-					picture: {},
-				})),
-			),
-		);
-		axios.get(dataUrl).then((res) => {
-			const newData = data.concat(res.data.results);
-			setData(newData);
-			setList(newData);
-			setLoading(false); // Resetting window's offsetTop so as to display react-virtualized demo underfloor.
-			// In real scene, you can using public method of react-virtualized:
-			// https://stackoverflow.com/questions/46700726/how-to-use-public-method-updateposition-of-react-virtualized
-
-			// window.dispatchEvent(new Event('resize'));
-		})
-	};
-
-	// const loadMore =
-	// 	!initLoading && !loading ? (
-	// 		<div
-	// 			style={{
-	// 				textAlign: 'center',
-	// 				marginTop: 12,
-	// 				height: 32,
-	// 				lineHeight: '32px',
-	// 			}}
-	// 		>
-	// 			<Button onClick={onLoadMore}>loading more</Button>
-	// 		</div>
-	// 	) : null;
-
 	return (
 		<div
 			style={{
@@ -106,7 +58,6 @@ const HistoryList = () => {
 				className="demo-loadmore-list"
 				loading={initLoading}
 				itemLayout="horizontal"
-				// loadMore={loadMore}
 				dataSource={list}
 				renderItem={(item) => (
 					<List.Item
@@ -117,9 +68,11 @@ const HistoryList = () => {
 					>
 						<Skeleton avatar title={false} loading={item.loading} active>
 							<List.Item.Meta
-								// avatar={<Avatar src={item.picture.large} />}
-								avatar={<Avatar icon={<UserOutlined />} />}
-								title={<a href="https://ant.design">{item.title}</a>}
+								avatar={<Avatar src={icon} icon={<UserOutlined />} />}
+								title={<span style={{
+									fontSize: "16px",
+									fontWeight: "bold"
+								}}>{item.title}</span>}
 								description={item.abstract}
 							/>
 							<div>{item.join_time}</div>
@@ -135,4 +88,15 @@ const HistoryList = () => {
 	);
 };
 
-export default HistoryList;
+const mapStateToProps = (state) => {
+	return {
+		history: state.historyList,
+		icon: state.userInfo.icon
+	}
+}
+
+const mapDispatchToProps = { setHistory };
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(HistoryList);
