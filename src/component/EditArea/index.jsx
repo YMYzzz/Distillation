@@ -6,12 +6,14 @@ import { useParams } from 'react-router-dom';
 import TextLoader from '../TextLoader/index'
 import ShowArea from '../ShowArea';
 import { getToken } from '../../utils/tools'
+import { setHistory } from '../../actions';
+import { connect } from 'react-redux'
 
 const success = (msg) => {
 	message.success(msg);
 };
 
-const EditArea = () => {
+const EditArea = ({ setHistory }) => {
 	const [title, setTitle] = useState('')
 	const [abstract, setAbstract] = useState('')
 	const [text, setText] = useState('')
@@ -54,6 +56,16 @@ const EditArea = () => {
 				console.log(data)
 			}).catch((err) => {
 				console.log(err)
+			}).finally(() => {
+				axios.get('api/article/history', {
+					headers: { 'Authorization': getToken() }
+				}).then((res) => {
+					const data = res.data
+					if (data.meta.status === 2000) {
+						const articles = data.data.articles
+						setHistory(articles)
+					}
+				})
 			})
 		}
 
@@ -101,4 +113,8 @@ const EditArea = () => {
 	);
 };
 
-export default EditArea;
+const mapDispatchToProps = { setHistory };
+export default connect(
+	null,
+	mapDispatchToProps
+)(EditArea);

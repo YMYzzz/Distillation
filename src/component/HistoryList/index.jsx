@@ -9,8 +9,7 @@ import { setHistory } from '../../actions';
 import { connect } from 'react-redux'
 import './HistoryList.css'
 
-const HistoryList = ({ history, icon }) => {
-	const [initLoading, setInitLoading] = useState(false);
+const HistoryList = ({ history, icon, setHistory }) => {
 	const [list, setList] = useState(history);
 
 	const deleteRecord = (id, title) => {
@@ -24,7 +23,6 @@ const HistoryList = ({ history, icon }) => {
 			if (data.meta.status === 2000) {
 				openNotification(title)
 				const articles = data.data.articles
-				setInitLoading(false);
 				// 分别更新当前页面列表和redux列表
 				setList(articles);
 				setHistory(articles)
@@ -56,7 +54,6 @@ const HistoryList = ({ history, icon }) => {
 		>
 			<List
 				className="demo-loadmore-list"
-				loading={initLoading}
 				itemLayout="horizontal"
 				dataSource={list}
 				renderItem={(item) => (

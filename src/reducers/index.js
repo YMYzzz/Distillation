@@ -1,13 +1,3 @@
-import { act } from 'react-dom/test-utils';
-import { combineReducers } from 'redux'
-// import todos from './todos'
-// import visibilityFilter from './visibilityFilter'
-
-// const distillation = combineReducers({
-//   todos,
-//   visibilityFilter
-// })
-
 const initialState = {
     userInfo: {
         userName: '',
@@ -31,7 +21,8 @@ const distillation = (state = initialState, action) => {
             }
         case 'SET_HISTORY':
             return {
-                ...state, historyList: action.history
+                userInfo: { ...state.userInfo },
+                historyList: action.history
             }
         default:
             return state
