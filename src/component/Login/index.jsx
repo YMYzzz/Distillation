@@ -138,8 +138,12 @@ const Login = () => {
         }
 
         const passwordValidate = (value) => {
-            if (!value || value.length < 6) return '密码长度必须超过6个字符。';
-            return undefined;
+            var reg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,16}$/;
+            var check = reg.test(value);
+            if (check) 
+                return undefined;
+            else 
+                return '密码长度应为6~16个字符且由大小写字母与数字组成。';
         }
 
 
@@ -180,7 +184,7 @@ const Login = () => {
 
             <div style={{ display: 'flex', alignItems: 'center', fontWeight: 100, marginBottom: '25px' }}>
                 <FaChessBishop style={{ marginRight: '10px', fontSize: '1.3em', color: '#83afe0' }} />
-                <span>Distillation 在线服务</span>
+                <span>Distillation 在线摘要提取服务</span>
             </div>
 
             <h1 className={classes.cardHeader}>登录</h1>
@@ -193,12 +197,12 @@ const Login = () => {
                         {formErrors.map(err => <div>{err}</div>)}
                     </Alert> : ''}
 
-                    {isSuccessed ? <Alert type="success">欢迎!</Alert> : ''}
+                    {isSuccessed ? <Alert title="登录成功" type="success">欢迎您!</Alert> : ''}
 
                     <div name="phone">
                         <Label>
-                            <span>手机号</span>
-                            <Input value={phoneNum} onChange={(e) => setPhone(e.target.value)} />
+                            <span>手机号/用户名</span>
+                            <Input placeholder="使用用户名或手机号均可登录" value={phoneNum} onChange={(e) => setPhone(e.target.value)} />
                         </Label>
                     </div>
 
