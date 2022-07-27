@@ -140,7 +140,7 @@ const RegisterMod = () => {
 
         const handleSend = async (e) => {
             e.preventDefault();
-            let a = 10;
+            let a = 60;
             console.log(phoneNum, '手机号');
             var reg_tel = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
             if (reg_tel.test(phoneNum)) {
@@ -191,8 +191,12 @@ const RegisterMod = () => {
         }
 
         const passwordValidate = (value) => {
-            if (!value || value.length < 6) return '密码长度应超过6个字符。';
-            return undefined;
+            var reg = '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,16}$/';
+            var check = reg.test(value);
+            if (check) 
+                return undefined;
+            else 
+                return '密码长度应为6~16个字符且由大小写字母与数字组成。';
         }
 
         const repeatValidate = (val1, val2) => !val1 || val2 !== val1 ? '密码不匹配' : undefined;
@@ -231,7 +235,7 @@ const RegisterMod = () => {
                 const data = res.data
                 console.log(data)
                 if (data.meta.status == '2000') {
-                    setResponse('注册成功, 请登录');
+                    setResponse('注册成功, 请您登录！');
                 }
             }).catch((err) => {
                 console.log(err)
@@ -244,7 +248,7 @@ const RegisterMod = () => {
             <div className={classes.loginCard}>
                 <div style={{ display: 'flex', alignItems: 'center', fontWeight: 100, marginBottom: '25px' }}>
                     <FaChessBishop style={{ marginRight: '10px', fontSize: '1.3em', color: '#83afe0' }} />
-                    <span>Distillation 在线服务</span>
+                    <span>Distillation 在线摘要提取服务</span>
                 </div>
 
                 <h1 className={classes.cardHeader}>注册账户</h1>
@@ -256,7 +260,7 @@ const RegisterMod = () => {
                             <span>请输入手机号</span>
                             <div style={{ display: "flex" }}>
                                 <Input type="text" value={phoneNum} onChange={onChangeInput} />
-                                <Button type="button" disabled={num !== 0} onClick={handleSend}>{num == 0 ? '发送验证码' : num + "秒"}</Button>
+                                <Button type="button" disabled={num !== 0} onClick={handleSend}>{num == 0 ? '发送验证码' : num + "秒后再次发送"}</Button>
                             </div>
                         </Label>
                     </div>
@@ -284,7 +288,7 @@ const RegisterMod = () => {
                         <div>
                             <Label>
                                 <span>请重复输入密码</span>
-                                <Input type="password" value={repeatPassword} onChange={(e) => setRepeatPassword(e.target.value)} />
+                                <Input placeholder="请输入重复输入设定的密码" type="password" value={repeatPassword} onChange={(e) => setRepeatPassword(e.target.value)} />
                             </Label>
                         </div>
 
@@ -302,7 +306,7 @@ const RegisterMod = () => {
 
                     </form>
 
-                </div> : <Alert type="success">{response}</Alert>
+                </div> : <Alert title="注册成功" type="success">{response}</Alert>
                 }
 
                 <Button fullWidth onClick={backToLogin} color="green" iconLeft={<FaArrowLeft />}>回到登录</Button>
