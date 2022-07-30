@@ -15,8 +15,8 @@ import { setUserInfo, setHistory } from './actions';
 import { connect } from 'react-redux'
 
 
-
-axios.defaults.baseURL = "https://hz-t3.matpool.com:27758";
+axios.defaults.baseURL = "http://127.0.0.1:5000";
+//axios.defaults.baseURL = "https://hz-t3.matpool.com:27758";
 const { Header, Content, Footer } = Layout;
 
 const App = ({ globalUserInfo, setUserInfo, setHistory }) => {
@@ -66,6 +66,7 @@ const App = ({ globalUserInfo, setUserInfo, setHistory }) => {
 
 	const mainStyle = {
 		height: clientHeight + 'px',
+		fontFamily: 'oppo',
 		// minHeight: '100%',
 	}
 
@@ -80,6 +81,13 @@ const App = ({ globalUserInfo, setUserInfo, setHistory }) => {
 					width: '100%',
 				}}
 			>
+				<div style={{
+					color: 'white',
+				}}>
+					<div style={{  float: 'left',fontSize: '150%', }}>Distillation | </div>
+					<div style={{ float: 'left',}}> &nbsp; 标题摘要一键生成</div>
+				</div>
+
 				<div style={{ float: 'right' }}>
 					<HomeButton></HomeButton>
 					<MyAvatar></MyAvatar>
