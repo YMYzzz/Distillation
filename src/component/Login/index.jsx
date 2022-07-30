@@ -138,12 +138,12 @@ const Login = () => {
         }
 
         const passwordValidate = (value) => {
-            var reg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,16}$/;
+            var reg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/;
             var check = reg.test(value);
             if (check) 
                 return undefined;
             else 
-                return '密码长度应为6~16个字符且由大小写字母与数字组成。';
+                return '密码长度应为8~16个字符且由大小写字母与数字组成。';
         }
 
 
@@ -184,7 +184,7 @@ const Login = () => {
 
             <div style={{ display: 'flex', alignItems: 'center', fontWeight: 100, marginBottom: '25px' }}>
                 <FaChessBishop style={{ marginRight: '10px', fontSize: '1.3em', color: '#83afe0' }} />
-                <span>Distillation 在线摘要提取服务</span>
+                <span>Distillation 智能创作平台</span>
             </div>
 
             <h1 className={classes.cardHeader}>登录</h1>
@@ -209,7 +209,7 @@ const Login = () => {
                     <div name="password" validate={passwordValidate}>
                         <Label>
                             <span>密码</span>
-                            <Input placeholder="包含数字、大小写字母且长度为6-16位" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                            <Input placeholder="包含数字、大小写字母且长度为8-16位" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                         </Label>
                     </div>
 
