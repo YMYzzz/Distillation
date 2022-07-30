@@ -191,12 +191,12 @@ const RegisterMod = () => {
         }
 
         const passwordValidate = (value) => {
-            var reg = '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,16}$/';
+            var reg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/;
             var check = reg.test(value);
             if (check) 
                 return undefined;
             else 
-                return '密码长度应为6~16个字符且由大小写字母与数字组成。';
+                return '密码长度应为8~16个字符且由大小写字母与数字组成。';
         }
 
         const repeatValidate = (val1, val2) => !val1 || val2 !== val1 ? '密码不匹配' : undefined;
@@ -208,12 +208,12 @@ const RegisterMod = () => {
             let errors = [];
 
             let passwordCheck = passwordValidate(password);
-            if (passwordCheck) errors.push(passwordCheck);
+            //if (passwordCheck) errors.push(passwordCheck);
 
             let repeatCheck = repeatValidate(password, repeatPassword);
             if (repeatCheck) errors.push(repeatCheck);
 
-            setFormErrors(errors);
+            //setFormErrors(errors);
             //const data = { "phone":phoneNum, username, password ,code , "confirm_password":repeatPassword};
             // const requestOptions = {
             //     method: 'POST',
@@ -236,9 +236,14 @@ const RegisterMod = () => {
                 console.log(data)
                 if (data.meta.status == '2000') {
                     setResponse('注册成功, 请您登录！');
+                } else {
+                    errors.push(data.meta.msg);
+                    setFormErrors(errors);
+                    console.log(errors);
                 }
             }).catch((err) => {
                 console.log(err)
+                //setFormErrors(errors);
             });
             //TODO: check the response.status
             //console.log(result['meta']['status']);
@@ -248,7 +253,7 @@ const RegisterMod = () => {
             <div className={classes.loginCard}>
                 <div style={{ display: 'flex', alignItems: 'center', fontWeight: 100, marginBottom: '25px' }}>
                     <FaChessBishop style={{ marginRight: '10px', fontSize: '1.3em', color: '#83afe0' }} />
-                    <span>Distillation 在线摘要提取服务</span>
+                    <span>Distillation 智能创作平台</span>
                 </div>
 
                 <h1 className={classes.cardHeader}>注册账户</h1>
