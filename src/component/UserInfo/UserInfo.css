@@ -1,5 +1,5 @@
-.ant-upload.ant-upload-select-picture-card {
+div.ant-upload-select {
     width: 104px;
-    height: auto;
+    height: auto !important;
     min-height: 104px;
 }

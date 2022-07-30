@@ -92,7 +92,7 @@ const EditArea = ({ setHistory }) => {
 				height: '22%',
 				width: '70%',
 				margin: '0 auto',
-				marginBottom: '2em'
+				marginBottom: '1em'
 			}}>
 				<ShowArea title={title} abstract={abstract}></ShowArea>
 			</div>
@@ -100,6 +100,7 @@ const EditArea = ({ setHistory }) => {
 				height: '73%',
 				width: '70%',
 				margin: '0 auto',
+				padding: '0.5em 0',
 				borderRadius: '0.75em',
 				boxShadow: '0px 5px 16px -2px rgb(42 115 217 / 20%)',
 				display: 'flex',

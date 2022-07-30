@@ -7,7 +7,7 @@ import { setToken } from '../../utils/tools'
 import axios from 'axios';
 
 import {
-    mainTheme, lightTheme, darkTheme,
+    lightTheme, darkTheme,
     loginLayoutStyles, loginPageStyles, buttonStyles, inputStyles,
     toggleThemeButtonStyles,
     labelStyles, alertStyles
@@ -206,7 +206,7 @@ const Login = () => {
                         </Label>
                     </div>
 
-                    <div name="password" validate={passwordValidate}>
+                    <div name="password">
                         <Label>
                             <span>密码</span>
                             <Input placeholder="包含数字、大小写字母且长度为8-16位" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />

@@ -15,11 +15,11 @@ import { setUserInfo, setHistory } from './actions';
 import { connect } from 'react-redux'
 
 
-axios.defaults.baseURL = "http://127.0.0.1:5000";
+axios.defaults.baseURL = "http://10.15.20.228:5000";
 //axios.defaults.baseURL = "https://hz-t3.matpool.com:27758";
 const { Header, Content, Footer } = Layout;
 
-const App = ({ globalUserInfo, setUserInfo, setHistory }) => {
+const App = ({ setUserInfo, setHistory }) => {
 	const [clientHeight, setClientHeight] = useState(document.body.offsetHeight)
 
 	const handleClientHeightChange = () => {

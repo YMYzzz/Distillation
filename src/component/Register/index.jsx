@@ -6,7 +6,7 @@ import * as reactJss from "react-jss";
 import axios from 'axios';
 
 import {
-    mainTheme, lightTheme, darkTheme,
+    lightTheme, darkTheme,
     loginLayoutStyles, buttonStyles, inputStyles,
     toggleThemeButtonStyles, registrationPageStyles,
     labelStyles, alertStyles
@@ -193,9 +193,9 @@ const RegisterMod = () => {
         const passwordValidate = (value) => {
             var reg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/;
             var check = reg.test(value);
-            if (check) 
+            if (check)
                 return undefined;
-            else 
+            else
                 return '密码长度应为8~16个字符且由大小写字母与数字组成。';
         }
 
@@ -213,18 +213,6 @@ const RegisterMod = () => {
             let repeatCheck = repeatValidate(password, repeatPassword);
             if (repeatCheck) errors.push(repeatCheck);
 
-            //setFormErrors(errors);
-            //const data = { "phone":phoneNum, username, password ,code , "confirm_password":repeatPassword};
-            // const requestOptions = {
-            //     method: 'POST',
-            //     mode: 'cors',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify({ "phone": phoneNum, username, password, code, "confirm_password": repeatPassword })
-            // };
-            // const response = await fetch('api/user/register', requestOptions);
-            // const result = await response.json();
-            // console.log(response.status);
-            // console.log(result);
             axios.post('api/user/register', {
                 "phone": phoneNum,
                 username,

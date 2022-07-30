@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { HomeOutlined } from '@ant-design/icons';
+import { HomeOutlined,HomeTwoTone } from '@ant-design/icons';
 import { Avatar, Popover } from 'antd';
 
 const HomeButton = () => {
@@ -23,7 +23,10 @@ const HomeButton = () => {
             <Popover content={homePopver} trigger="hover" onClick={goHome}>
                 <Avatar
                     style={{
-                        backgroundColor: '#87d068',
+                        border:'solid',
+                        borderWidth:'0.1em',
+                        borderColor:'white',
+                        backgroundColor: 'rgb(0,21,41)',
                         cursor: "pointer",
                         marginRight: '1em'
                     }}

@@ -202,7 +202,8 @@ const UserInfo = ({ globalUserInfo, setUserIcon }) => {
                     <div
                         style={{
                             width: '104px',
-                            minHeight: '104px',
+                            // height: 'auto',
+                            // minHeight: '104px',
                             marginBottom: '10px',
                         }}>
                         <Upload
@@ -230,7 +231,7 @@ const UserInfo = ({ globalUserInfo, setUserIcon }) => {
                 <div>
                     <Button onClick={uploadIcon}>点击上传</Button>
                 </div>
-            </div>
+            </div >
 
             <div
                 style={{
@@ -280,7 +281,7 @@ const UserInfo = ({ globalUserInfo, setUserIcon }) => {
                         onChange={(e) => setNewPwd(e.target.value)} />
                 </Modal>
             </div>
-        </div>
+        </div >
     )
 };
 

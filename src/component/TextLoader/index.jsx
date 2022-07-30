@@ -5,6 +5,7 @@ import { Upload, Modal, Input, Button, Tooltip } from 'antd';
 import axios from 'axios'
 import { PlusOutlined } from '@ant-design/icons';
 import './TextLoader.css'
+import { FaTrafficLight } from 'react-icons/fa';
 
 const { TextArea } = Input;
 
@@ -217,13 +218,18 @@ const TextLoader = (props) => {
                     disabled={fileList.length === 0 && picList.length === 0}
                     loading={uploading}
                     style={{
-                        marginTop: 16,
+                        fontSize: '1.2em',
+                        marginTop: '.5em',
                     }}
                 >
                     {uploading ? '提取中...' : '立刻提取'}
                 </Button>
                 <Button
-                    style={{ marginTop: '.7em', marginLeft: '1em' }}
+                    style={{
+                        marginTop: '.5em',
+                        marginLeft: '1em',
+                        fontSize: '1.2em'
+                    }}
                     disabled={text.length === 0}
                     loading={generating}
                     onClick={upLoadText}
@@ -231,7 +237,12 @@ const TextLoader = (props) => {
                 >
                     {generating ? '正在生成...' : '自动生成'}
                 </Button>
-                <Button style={{ marginTop: '.7em', marginLeft: '1em' }} onClick={saveRecord} type="primary">保存记录</Button>
+                <Button style={{
+                    marginTop: '.5em',
+                    marginLeft: '1em',
+                    fontSize: '1.2em',
+                }}
+                    onClick={saveRecord} type="primary">保存记录</Button>
 
             </div>
         </>
