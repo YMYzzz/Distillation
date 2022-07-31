@@ -7,25 +7,21 @@
 
 @font-face {
     font-family: 'oppo';
-    font-weight: 900;
     src: local('Lato'), url(./style/fonts/OPPOSans-H.ttf) format('truetype');
 }
 
 @font-face {
     font-family: 'oppo';
-    font-weight: 900;
     src: local('Lato'), url(./style/fonts/OPPOSans-L.ttf) format('truetype');
 }
 
 @font-face {
   font-family: 'oppo';
-  font-weight: 900;
   src: local('Lato'), url(./style/fonts/OPPOSans-M.ttf) format('truetype');
 }
 
 @font-face {
   font-family: 'oppo';
-  font-weight: 900;
   src: local('Lato'), url(./style/fonts/OPPOSans-R.ttf) format('truetype');
 }
 
@@ -49,6 +45,11 @@
 }
 div.ant-descriptions-title{
   font-size: 1.8em;
+  font-weight: bold;
+}
+
+div.ant-modal-title { 
+  font-weight: bold;
 }
 /* 
 #root{
