@@ -151,6 +151,34 @@ const TextLoader = (props) => {
         setText(e.target.value)
     }
 
+    const myButtonStyle = {
+        marginTop: '.5em',
+        marginLeft: '1em',
+        fontSize: '1.2em',
+        //display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        //paddingLeft: '1.5rem',
+        //paddingRight: '1.5rem',
+        //paddingTop: '.75rem',
+        //paddingBottom: '.75rem',
+        borderRadius: '.25rem',
+        border: 'none',
+        //color: '#fff',
+        //background: '#4299e1',
+        outline: 'none',
+        cursor: 'pointer',
+        '&:hover': {
+            filter: 'brightness(90%)'
+         },
+         '&:focus': {
+            outlineColor: 'rgba(0,0,0,0)',
+            outlineOffset: '2px',
+            outlineStyle: 'solid',
+            borderColor: '#429e1'
+         }
+    }
+
     return (
         <>
             <div>
@@ -217,19 +245,12 @@ const TextLoader = (props) => {
                     onClick={handleUpload}
                     disabled={fileList.length === 0 && picList.length === 0}
                     loading={uploading}
-                    style={{
-                        fontSize: '1.2em',
-                        marginTop: '.5em',
-                    }}
+                    style={myButtonStyle}
                 >
                     {uploading ? '提取中...' : '立刻提取'}
                 </Button>
                 <Button
-                    style={{
-                        marginTop: '.5em',
-                        marginLeft: '1em',
-                        fontSize: '1.2em'
-                    }}
+                    style={myButtonStyle}
                     disabled={text.length === 0}
                     loading={generating}
                     onClick={upLoadText}
@@ -237,11 +258,7 @@ const TextLoader = (props) => {
                 >
                     {generating ? '正在生成...' : '自动生成'}
                 </Button>
-                <Button style={{
-                    marginTop: '.5em',
-                    marginLeft: '1em',
-                    fontSize: '1.2em',
-                }}
+                <Button style={myButtonStyle}
                     onClick={saveRecord} type="primary">保存记录</Button>
 
             </div>
