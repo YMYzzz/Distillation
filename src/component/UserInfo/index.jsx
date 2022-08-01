@@ -174,6 +174,34 @@ const UserInfo = ({ globalUserInfo, setUserIcon }) => {
         setVisible(false);
     };
 
+    const myButtonStyle = {
+        //marginTop: '.5em',
+        //marginLeft: '1em',
+        //fontSize: '1.2em',
+        //display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        //paddingLeft: '1.5rem',
+        //paddingRight: '1.5rem',
+        //paddingTop: '.75rem',
+        //paddingBottom: '.75rem',
+        borderRadius: '.25rem',
+        border: 'none',
+        color: '#fff',
+        background: '#4299e1',
+        outline: 'none',
+        cursor: 'pointer',
+        '&:hover': {
+            filter: 'brightness(90%)'
+         },
+         '&:focus': {
+            outlineColor: 'rgba(0,0,0,0)',
+            outlineOffset: '2px',
+            outlineStyle: 'solid',
+            borderColor: '#fff'
+         }
+    }
+
     return (
         <div
             className="site-layout-background"
@@ -229,7 +257,7 @@ const UserInfo = ({ globalUserInfo, setUserIcon }) => {
                     </div>
                 </Tooltip>
                 <div>
-                    <Button onClick={uploadIcon}>点击上传</Button>
+                    <Button style={myButtonStyle} onClick={uploadIcon}>点击上传</Button>
                 </div>
             </div >
 
@@ -245,7 +273,7 @@ const UserInfo = ({ globalUserInfo, setUserIcon }) => {
                     <Descriptions.Item label="用户名">{userName}</Descriptions.Item>
                     <Descriptions.Item label="手机号">{phone}</Descriptions.Item>
                     <Descriptions.Item label="注册时间">{joinTime}</Descriptions.Item>
-                    <Descriptions.Item label="修改密码"><Button type="dashed" onClick={showModal}>
+                    <Descriptions.Item label="修改密码"><Button type="dashed" style={{borderRadius: '.25rem',}} onClick={showModal} danger>
                         点击此处修改密码
                     </Button></Descriptions.Item>
                 </Descriptions>
@@ -258,10 +286,10 @@ const UserInfo = ({ globalUserInfo, setUserIcon }) => {
                     onCancel={handleCancel}
                     destroyOnClose={true}
                     footer={[
-                        <Button key="back" onClick={handleCancel} style={{ marginRight: '3em' }}>
+                        <Button key="back" onClick={handleCancel} style={myButtonStyle}>
                             取消
                         </Button>,
-                        <Button key="submit" type="primary" loading={confirmLoading} onClick={handleOk}>
+                        <Button key="submit" type="primary" loading={confirmLoading} style={myButtonStyle} onClick={handleOk}>
                             确定
                         </Button>
                     ]}
