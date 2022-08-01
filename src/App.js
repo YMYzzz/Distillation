@@ -4,7 +4,7 @@ import { Layout } from 'antd';
 import axios from 'axios'
 import RequireAuth from './utils/auth';
 import MyAvatar from './component/MyAvatar';
-import HomeButton from './component/HomeButton';
+// import HomeButton from './component/HomeButton';
 import EditArea from './component/EditArea'
 import HistoryList from './component/HistoryList'
 import Register from './component/Register'
@@ -13,10 +13,11 @@ import UserInfo from './component/UserInfo'
 import { getToken, isLogined } from './utils/tools'
 import { setUserInfo, setHistory } from './actions';
 import { connect } from 'react-redux'
+import { useNavigate } from 'react-router-dom';
 
 
-axios.defaults.baseURL = "http://127.0.0.1:5000";
-//axios.defaults.baseURL = "http://10.15.20.228:5000";
+// axios.defaults.baseURL = "http://127.0.0.1:5000";
+axios.defaults.baseURL = "http://10.15.20.228:5000";
 //axios.defaults.baseURL = "https://hz-t3.matpool.com:27758";
 const { Header, Content, Footer } = Layout;
 
@@ -71,6 +72,12 @@ const App = ({ setUserInfo, setHistory }) => {
 		// minHeight: '100%',
 	}
 
+	const navigate = useNavigate();
+
+	const goHome = () => {
+        navigate("/")
+    }
+
 	return (
 		< Layout
 			style={mainStyle}
@@ -85,12 +92,12 @@ const App = ({ setUserInfo, setHistory }) => {
 				<div style={{
 					color: 'white',
 				}}>
-					<div style={{  float: 'left',fontSize: '150%', }}>Distillation | </div>
-					<div style={{ float: 'left',fontWeight: 'bold' }}> &nbsp; 标题摘要一键生成</div>
+					<div style={{  float: 'left',fontSize: '150%', }} onClick={goHome} >Distillation | </div>
+					<div style={{ float: 'left' }} onClick={goHome} > &nbsp; 标题摘要一键生成</div>
 				</div>
 
 				<div style={{ float: 'right' }}>
-					<HomeButton></HomeButton>
+					{/* <HomeButton></HomeButton> */}
 					<MyAvatar></MyAvatar>
 				</div>
 			</Header>

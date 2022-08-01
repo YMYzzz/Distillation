@@ -47,15 +47,24 @@ const MyAvatar = ({ icon }) => {
         </div >
     );
 
+    const unLoginStyle = {
+        border: 'solid',
+        borderWidth: '0.1em',
+        borderColor: 'white',
+        backgroundColor: 'rgb(0,21,41)',
+        cursor: "pointer"
+    }
+
+    const LoginStyle = {
+        ursor: "pointer"
+    }
+
     return (
         <>
             {/* 条件判断是否登录，若未登录则包裹popover，若已登录则不需要包裹并且头像图片显示用户头像 */}
             <Popover content={isLogin ? userPopover : loginPopover} trigger="hover" onClick={isLogin ? goUserInfo : goLogin}>
                 <Avatar
-                    style={{
-                        backgroundColor: '#87d068',
-                        cursor: "pointer"
-                    }}
+                    style={isLogin ? LoginStyle : unLoginStyle}
                     size={40}
                     src={isLogin ? icon : null}
                     icon={<UserOutlined />} />
