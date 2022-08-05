@@ -6,6 +6,7 @@ import axios from 'axios'
 import { PlusOutlined } from '@ant-design/icons';
 import './TextLoader.css'
 import { FaTrafficLight } from 'react-icons/fa';
+import {isLogined} from '../../utils/tools'
 
 const { TextArea } = Input;
 
@@ -167,16 +168,16 @@ const TextLoader = (props) => {
         //color: '#fff',
         //background: '#4299e1',
         outline: 'none',
-        cursor: 'pointer',
+        // cursor: 'pointer',
         '&:hover': {
             filter: 'brightness(90%)'
-         },
-         '&:focus': {
+        },
+        '&:focus': {
             outlineColor: 'rgba(0,0,0,0)',
             outlineOffset: '2px',
             outlineStyle: 'solid',
             borderColor: '#429e1'
-         }
+        }
     }
 
     return (
@@ -258,8 +259,14 @@ const TextLoader = (props) => {
                 >
                     {generating ? '正在生成...' : '自动生成'}
                 </Button>
-                <Button style={myButtonStyle}
-                    onClick={saveRecord} type="primary">保存记录</Button>
+                <Button
+                    style={myButtonStyle}
+                    onClick={saveRecord}
+                    type="primary"
+                    disabled={!isLogined()}
+                >
+                    保存记录
+                </Button>
 
             </div>
         </>
