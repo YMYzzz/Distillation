@@ -1,72 +1,66 @@
-# Getting Started with Create React App
+# Distillation 自动生成标题摘要
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 项目背景
+本项目背景为2022年中国软件杯A9赛题：智能创作平台 前端部分
 
-## Available Scripts
+赛题详细信息请点击链接查看
 
-In the project directory, you can run:
+[软件杯A9赛题]: http://www.cnsoftbei.com/plus/view.php?aid=729
 
-### `npm start`
 
-Runs the app in the development mode.
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.
-You may also see any lint errors in the console.
+## 技术栈
+项目使用React开发，组件使用Ant Design，前后端分离，使用react-redux管理前端数据
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+## 实现功能
+项目实现功能如下：
+1. 输入文本、上传文档识别文本、上传图片COR文本
+2. 根据文本自动生成标题和摘要（需配合后端及算法部分）
+3. 生成历史记录可保存（需登录）
+4. 用户注册登录
+5. 用户修改头像、密码
 
-Builds the app for production to the `build` folder
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 开始使用
 
-### `npm run eject`
+使用 `npm install` 来安装需要的node包
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+使用 `npm start` 在本地启动前端项目
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+使用 `npm build` 打包前端代码
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+## 项目预览
+![主页面](preview\主页.png)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+**项目主页面**
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+![自动生成功能](preview\自动生成.png)
 
-### Code Splitting
+**自动生成功能**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+![历史记录功能](preview\历史记录.png)
 
-### Analyzing the Bundle Size
+**历史记录功能**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+![用户登录](preview\登录.png)
 
-### Making a Progressive Web App
+**用户登录**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+![用户注册](preview\注册.png)
 
-### Advanced Configuration
+**用户注册**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+![用户信息](preview\用户信息.png)
 
-### Deployment
+**用户信息**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 版权信息
 
-**Distillation**
+本项目开源代码用于学习，不可商用
