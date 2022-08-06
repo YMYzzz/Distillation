@@ -3,9 +3,7 @@
 ## 项目背景
 本项目背景为2022年中国软件杯A9赛题：智能创作平台 前端部分
 
-赛题详细信息请点击链接查看
-
-[软件杯A9赛题]: http://www.cnsoftbei.com/plus/view.php?aid=729
+赛题详细信息请点击链接查看 http://www.cnsoftbei.com/plus/view.php?aid=729
 
 
 
