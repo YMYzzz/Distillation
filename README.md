@@ -37,23 +37,23 @@
 
 **项目主页面**
 
-![自动生成功能](preview\自动生成.png)
+![自动生成功能](https://raw.githubusercontent.com/YMYzzz/Distillation/main/preview/%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90.png)
 
 **自动生成功能**
 
-![历史记录功能]([preview\历史记录.png](https://raw.githubusercontent.com/YMYzzz/Distillation/main/preview/%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95.png))
+![历史记录功能](https://raw.githubusercontent.com/YMYzzz/Distillation/main/preview/%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95.png)
 
 **历史记录功能**
 
-![用户登录](preview\登录.png)
+![用户登录](https://raw.githubusercontent.com/YMYzzz/Distillation/main/preview/%E7%99%BB%E5%BD%95.png)
 
 **用户登录**
 
-![用户注册](preview\注册.png)
+![用户注册](https://raw.githubusercontent.com/YMYzzz/Distillation/main/preview/%E6%B3%A8%E5%86%8C.png)
 
 **用户注册**
 
-![用户信息](preview\用户信息.png)
+![用户信息](https://raw.githubusercontent.com/YMYzzz/Distillation/main/preview/%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF.png)
 
 **用户信息**
 
