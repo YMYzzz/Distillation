@@ -33,7 +33,7 @@
 
 
 ## 项目预览
-![主页面](preview\主页.png)
+![主页面](https://raw.githubusercontent.com/YMYzzz/Distillation/main/preview/%E4%B8%BB%E9%A1%B5.png)
 
 **项目主页面**
 
@@ -41,7 +41,7 @@
 
 **自动生成功能**
 
-![历史记录功能](preview\历史记录.png)
+![历史记录功能]([preview\历史记录.png](https://raw.githubusercontent.com/YMYzzz/Distillation/main/preview/%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95.png))
 
 **历史记录功能**
 
