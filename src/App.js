@@ -75,8 +75,8 @@ const App = ({ setUserInfo, setHistory }) => {
 	const navigate = useNavigate();
 
 	const goHome = () => {
-        navigate("/")
-    }
+		navigate("/")
+	}
 
 	return (
 		< Layout
@@ -92,7 +92,7 @@ const App = ({ setUserInfo, setHistory }) => {
 				<div style={{
 					color: 'white',
 				}}>
-					<div style={{  float: 'left',fontSize: '150%', }} onClick={goHome} >Distillation | </div>
+					<div style={{ float: 'left', fontSize: '150%', }} onClick={goHome} >Distillation | </div>
 					<div style={{ float: 'left' }} onClick={goHome} > &nbsp; 标题摘要一键生成</div>
 				</div>
 
@@ -131,9 +131,17 @@ const App = ({ setUserInfo, setHistory }) => {
 			<Footer
 				style={{
 					textAlign: 'center',
+					padding:'12px',
 				}}
 			>
 				Distillation ©2022 Created by Truly Bai
+				<div style={{ width: '300px', margin: '0 auto', padding: '5px 0' }}>
+					<a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=61040202000621" style={{ display: 'inline-block', textDecoration: 'none', height: '20px', lineHeight: '20px' }}>
+						<img src='/ba.png' style={{ float: 'left' }} />
+						<p style={{ float: 'left', height: '20px', lineHeight: '20px', margin: '0px 0px 0px 5px', color: '#939393' }}>陕公网安备 61040202000621号</p>
+					</a>
+					<p style={{height: '20px', lineHeight: '20px', margin: '0px 0px 0px 5px', color: '#939393' }}>陕ICP备2022009136号</p>
+				</div>
 			</Footer>
 		</Layout >
 	)

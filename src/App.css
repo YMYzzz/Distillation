@@ -4,30 +4,10 @@
   background: #4299e1;
 }
 
-/* @font-face {
-  font-family: 'oppo';
-  src: local('Lato'), url(./style/fonts/OPPOSans-B.ttf) format('truetype');
-}
-
-@font-face {
-    font-family: 'oppo';
-    src: local('Lato'), url(./style/fonts/OPPOSans-H.ttf) format('truetype');
-}
-
-@font-face {
-    font-family: 'oppo';
-    src: local('Lato'), url(./style/fonts/OPPOSans-L.ttf) format('truetype');
-} */
-
 @font-face {
   font-family: 'oppo';
   src: local('Lato'), url(./style/fonts/OPPOSans-M.ttf) format('truetype');
 }
-
-/* @font-face {
-  font-family: 'oppo';
-  src: local('Lato'), url(./style/fonts/OPPOSans-R.ttf) format('truetype');
-} */
 
 #components-layout-demo-fixed .logo {
   float: left;
